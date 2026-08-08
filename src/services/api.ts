@@ -198,6 +198,34 @@ export const apiService = {
     return data;
   },
 
+  async submitManualPayment(payload: { customerName: string; customerEmail: string; customerPhone?: string; companyName?: string; packName: string; amount: number; paymentMethod: 'MANUAL_WAVE' | 'MANUAL_OM'; transactionRef: string }): Promise<{ message: string; reference: string }> {
+    const res = await fetch(`${API_BASE_URL}/payment/manual/submit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Erreur enregistrement paiement manuel');
+    return data;
+  },
+
+  async getOrders(): Promise<any[]> {
+    const res = await fetch(`${API_BASE_URL}/payment/orders`);
+    if (!res.ok) throw new Error('Erreur chargement des commandes');
+    return res.json();
+  },
+
+  async verifyManualPayment(orderId: number, action: 'APPROVE' | 'REJECT', adminNotes?: string): Promise<{ message: string }> {
+    const res = await fetch(`${API_BASE_URL}/payment/manual/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId, action, adminNotes })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Erreur validation paiement');
+    return data;
+  },
+
   async submitContact(data: { firstName: string; lastName?: string; email: string; phone?: string; company?: string; message: string }): Promise<void> {
     const res = await fetch(`${API_BASE_URL}/admin/contact`, {
       method: 'POST',

@@ -4,29 +4,19 @@ import { useI18n } from '../context/I18nContext';
 import { apiService } from '../services/api';
 import { ExhibitorBudgetCalculator } from '../components';
 
+import { PaymentModal } from '../components/modals/PaymentModal';
+
 export const PricingPage: React.FC = () => {
   const { setCurrentPage, showToast, currentUser } = useAuth();
   const { t, formatPrice, currency } = useI18n();
-  const [loadingPack, setLoadingPack] = useState<string | null>(null);
+  const [selectedPackToPay, setSelectedPackToPay] = useState<{ packName: string; amount: number } | null>(null);
 
   const handlePayWave = async (packName: string, amount: number) => {
     if (amount === 0) {
       setCurrentPage('register');
       return;
     }
-
-    setLoadingPack(packName);
-    try {
-      showToast(`🌊 Initialisation du paiement pour le ${packName}...`);
-      const res = await apiService.createWaveCheckout(amount, packName, currentUser?.email);
-      if (res.wave_launch_url) {
-        window.location.href = res.wave_launch_url;
-      }
-    } catch (err: any) {
-      showToast(err.message || 'Erreur lors du paiement');
-    } finally {
-      setLoadingPack(null);
-    }
+    setSelectedPackToPay({ packName, amount });
   };
 
   return (
@@ -65,10 +55,9 @@ export const PricingPage: React.FC = () => {
           <button
             className="btn btn-outline"
             style={{ width: '100%' }}
-            disabled={loadingPack === 'Stand Découverte 6m²'}
             onClick={() => handlePayWave('Stand Découverte 6m²', 200000)}
           >
-            {loadingPack === 'Stand Découverte 6m²' ? 'Paiement en cours...' : `💳 Payer ${formatPrice(200000)}`}
+            💳 Choisir / Payer {formatPrice(200000)}
           </button>
         </div>
 
@@ -93,10 +82,9 @@ export const PricingPage: React.FC = () => {
           <button
             className="btn btn-accent"
             style={{ width: '100%' }}
-            disabled={loadingPack === 'Stand Business 9m²'}
             onClick={() => handlePayWave('Stand Business 9m²', 350000)}
           >
-            {loadingPack === 'Stand Business 9m²' ? 'Paiement en cours...' : `💳 Payer ${formatPrice(350000)}`}
+            💳 Choisir / Payer {formatPrice(350000)}
           </button>
         </div>
 
@@ -122,10 +110,9 @@ export const PricingPage: React.FC = () => {
           <button
             className="btn btn-accent"
             style={{ width: '100%' }}
-            disabled={loadingPack === 'Stand Premium 12m²'}
             onClick={() => handlePayWave('Stand Premium 12m²', 450000)}
           >
-            {loadingPack === 'Stand Premium 12m²' ? 'Paiement en cours...' : `💳 Payer ${formatPrice(450000)}`}
+            💳 Choisir / Payer {formatPrice(450000)}
           </button>
         </div>
 
@@ -150,10 +137,9 @@ export const PricingPage: React.FC = () => {
           <button
             className="btn btn-purple"
             style={{ width: '100%' }}
-            disabled={loadingPack === 'Stand Prestige 18m²'}
             onClick={() => handlePayWave('Stand Prestige 18m²', 600000)}
           >
-            {loadingPack === 'Stand Prestige 18m²' ? 'Paiement en cours...' : `💳 Payer ${formatPrice(600000)}`}
+            💳 Choisir / Payer {formatPrice(600000)}
           </button>
         </div>
       </div>
@@ -191,6 +177,14 @@ export const PricingPage: React.FC = () => {
           <i className="fab fa-whatsapp"></i> Demander un devis / proforma ({currency})
         </a>
       </div>
+
+      {selectedPackToPay && (
+        <PaymentModal
+          packName={selectedPackToPay.packName}
+          amount={selectedPackToPay.amount}
+          onClose={() => setSelectedPackToPay(null)}
+        />
+      )}
     </div>
   );
 };

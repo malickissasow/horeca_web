@@ -109,3 +109,22 @@ export interface ContactSubmission {
   createdAt?: string;
 }
 
+export interface Order {
+  id: number;
+  reference: string;
+  userId?: number;
+  customerName: string;
+  customerEmail: string;
+  customerPhone?: string;
+  companyName?: string;
+  packName: string;
+  amount: number;
+  paymentMethod: 'WAVE_API' | 'MANUAL_WAVE' | 'MANUAL_OM';
+  transactionRef?: string;
+  status: 'PENDING_PAYMENT' | 'PENDING_MANUAL_VERIFICATION' | 'COMPLETED' | 'REJECTED';
+  invoiceNumber?: string;
+  invoiceSent?: boolean;
+  adminNotes?: string;
+  createdAt?: string;
+}
+

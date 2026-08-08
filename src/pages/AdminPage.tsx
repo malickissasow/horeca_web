@@ -5,13 +5,15 @@ import { useAuth } from '../context/AuthContext';
 
 export const AdminPage: React.FC = () => {
   const { showToast } = useAuth();
-  const [activeTab, setActiveTab] = useState<'stats' | 'users' | 'contacts' | 'scanner'>('stats');
+  const [activeTab, setActiveTab] = useState<'stats' | 'users' | 'payments' | 'contacts' | 'scanner'>('stats');
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [masterMeetings, setMasterMeetings] = useState<Meeting[]>([]);
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [contacts, setContacts] = useState<ContactSubmission[]>([]);
+  const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [userSearch, setUserSearch] = useState('');
+  const [verifyingOrderId, setVerifyingOrderId] = useState<number | null>(null);
 
   // SCANNER STATE
   const [scanQuery, setScanQuery] = useState('');
@@ -21,16 +23,18 @@ export const AdminPage: React.FC = () => {
   const loadAdminData = async () => {
     setLoading(true);
     try {
-      const [sData, mData, uData, cData] = await Promise.all([
+      const [sData, mData, uData, cData, oData] = await Promise.all([
         apiService.getAdminStats(),
         apiService.getMasterMeetings(),
         apiService.getUsers(),
-        apiService.getContacts()
+        apiService.getContacts(),
+        apiService.getOrders().catch(() => [])
       ]);
       setStats(sData);
       setMasterMeetings(mData);
       setAllUsers(uData);
       setContacts(cData);
+      setOrders(oData || []);
     } catch (e) {
       console.error(e);
     } finally {
@@ -52,6 +56,19 @@ export const AdminPage: React.FC = () => {
       loadAdminData();
     } catch (err: any) {
       showToast(err.message || 'Erreur lors de la suppression');
+    }
+  };
+
+  const handleVerifyPayment = async (orderId: number, action: 'APPROVE' | 'REJECT') => {
+    setVerifyingOrderId(orderId);
+    try {
+      const res = await apiService.verifyManualPayment(orderId, action);
+      showToast(res.message);
+      loadAdminData();
+    } catch (err: any) {
+      showToast(err.message || 'Erreur lors de la validation du paiement');
+    } finally {
+      setVerifyingOrderId(null);
     }
   };
 
@@ -120,6 +137,13 @@ export const AdminPage: React.FC = () => {
             onClick={() => setActiveTab('users')}
           >
             <i className="fas fa-users"></i> Participants ({allUsers.length})
+          </button>
+          <button
+            className={`btn ${activeTab === 'payments' ? 'btn-accent' : 'btn-outline'}`}
+            style={activeTab === 'payments' ? {} : { color: 'white', borderColor: 'rgba(255,255,255,0.4)' }}
+            onClick={() => setActiveTab('payments')}
+          >
+            <i className="fas fa-credit-card"></i> Paiements & Factures ({orders.length})
           </button>
           <button
             className={`btn ${activeTab === 'contacts' ? 'btn-accent' : 'btn-outline'}`}
@@ -209,6 +233,114 @@ export const AdminPage: React.FC = () => {
             </div>
           </div>
         </>
+      ) : activeTab === 'payments' ? (
+        /* PAYMENTS TAB */
+        <div className="card">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
+            <div>
+              <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary)' }}>
+                💳 Commandes, Paiements & Validation des Factures ({orders.length})
+              </h3>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                Vérifiez les transferts manuels (Wave / Orange Money au +221 77 542 82 35), validez et envoyez automatiquement la facture acquittée par email.
+              </p>
+            </div>
+            <button className="btn btn-outline btn-sm" onClick={loadAdminData}>
+              <i className="fas fa-sync-alt"></i> Rafraîchir
+            </button>
+          </div>
+
+          {orders.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
+              Aucune commande ou demande de paiement enregistrée pour le moment.
+            </div>
+          ) : (
+            <div style={{ overflowX: 'auto' }}>
+              <table className="table" style={{ width: '100%', fontSize: '0.88rem' }}>
+                <thead>
+                  <tr style={{ background: 'var(--bg-subtle)', textAlign: 'left' }}>
+                    <th style={{ padding: '10px' }}>Date / Réf</th>
+                    <th style={{ padding: '10px' }}>Client / Entreprise</th>
+                    <th style={{ padding: '10px' }}>Offre / Pack</th>
+                    <th style={{ padding: '10px' }}>Montant</th>
+                    <th style={{ padding: '10px' }}>Mode & Réf Transfert</th>
+                    <th style={{ padding: '10px' }}>Statut</th>
+                    <th style={{ padding: '10px', textAlign: 'right' }}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map((o: any) => (
+                    <tr key={o.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                      <td style={{ padding: '12px 10px' }}>
+                        <div style={{ fontWeight: 700 }}>{o.reference}</div>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                          {new Date(o.created_at || Date.now()).toLocaleDateString('fr-FR')}
+                        </div>
+                      </td>
+                      <td style={{ padding: '12px 10px' }}>
+                        <div style={{ fontWeight: 700, color: 'var(--primary)' }}>{o.customer_name}</div>
+                        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{o.customer_email}</div>
+                        {o.customer_phone && <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>📞 {o.customer_phone}</div>}
+                      </td>
+                      <td style={{ padding: '12px 10px' }}>
+                        <span className="badge badge-sector" style={{ fontSize: '0.78rem' }}>
+                          {o.pack_name}
+                        </span>
+                      </td>
+                      <td style={{ padding: '12px 10px', fontWeight: 800, color: 'var(--accent)' }}>
+                        {Number(o.amount).toLocaleString('fr-FR')} FCFA
+                      </td>
+                      <td style={{ padding: '12px 10px' }}>
+                        <div style={{ fontWeight: 700 }}>
+                          {o.payment_method === 'MANUAL_OM' ? '🟧 Orange Money' : o.payment_method === 'MANUAL_WAVE' ? '📲 Transfert Wave' : '🌊 Wave Direct API'}
+                        </div>
+                        <div style={{ fontSize: '0.78rem', color: 'var(--primary)', fontWeight: 600 }}>
+                          Réf: {o.transaction_ref || 'Non renseigné'}
+                        </div>
+                      </td>
+                      <td style={{ padding: '12px 10px' }}>
+                        {o.status === 'COMPLETED' ? (
+                          <span className="badge badge-success" style={{ fontSize: '0.75rem' }}>
+                            ✓ PAYÉ & VALIDÉ ({o.invoice_number || 'INV-2026'})
+                          </span>
+                        ) : o.status === 'REJECTED' ? (
+                          <span className="badge badge-danger" style={{ fontSize: '0.75rem' }}>
+                            ✕ REJETÉ
+                          </span>
+                        ) : (
+                          <span className="badge badge-warning" style={{ fontSize: '0.75rem' }}>
+                            ⏳ EN ATTENTE VALIDATION
+                          </span>
+                        )}
+                      </td>
+                      <td style={{ padding: '12px 10px', textAlign: 'right' }}>
+                        {o.status !== 'COMPLETED' && (
+                          <div style={{ display: 'flex', gap: '6px', justifyContent: 'flex-end' }}>
+                            <button
+                              className="btn btn-accent btn-sm"
+                              disabled={verifyingOrderId === o.id}
+                              onClick={() => handleVerifyPayment(o.id, 'APPROVE')}
+                            >
+                              {verifyingOrderId === o.id ? 'Validation...' : '✅ Valider & Envoyer Facture'}
+                            </button>
+                            <button
+                              className="btn btn-outline btn-sm"
+                              disabled={verifyingOrderId === o.id}
+                              style={{ color: 'var(--danger)', borderColor: 'var(--danger)' }}
+                              onClick={() => handleVerifyPayment(o.id, 'REJECT')}
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       ) : activeTab === 'users' ? (
         <div className="card">
           <div className="card-header" style={{ flexWrap: 'wrap', gap: '10px' }}>
