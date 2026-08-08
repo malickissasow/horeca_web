@@ -1,4 +1,4 @@
-name: Deploy Web to app.horecafrica.org (Isolated Subdomain FTP)
+name: Deploy Web to app.horecafrica.org (Hostinger FTP)
 
 on:
   push:
@@ -42,17 +42,21 @@ jobs:
           fi
           echo "✅ Build successful! dist directory ready."
 
-      - name: 📤 FTP Deploy strictly to app.horecafrica.org public_html
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: 92.113.24.18
-          username: u208608546.app.horecafrica.org
-          password: B5@9ll@c
-          port: 21
-          server-dir: public_html/
-          local-dir: dist/
-          dangerous-clean-slate: false
-          state-name: .ftp-deploy-sync-state.json
+      - name: 📤 FTP Deploy to Hostinger via lftp
+        run: |
+          sudo apt-get update && sudo apt-get install -y lftp
+          lftp -e "
+            set ftp:ssl-allow yes;
+            set ftp:ssl-force no;
+            set ssl:verify-certificate no;
+            set ftp:passive-mode yes;
+            set net:timeout 15;
+            set net:max-retries 3;
+            open ftp://92.113.24.18:21;
+            user u208608546.app.horecafrica.org 'B5@9ll@c';
+            mirror -R --delete --verbose --exclude-glob .git* ./dist /public_html;
+            quit;
+          "
 
       - name: Deployment Summary
-        run: echo "🎉 Application deployed strictly to https://app.horecafrica.org without affecting api.horecafrica.org or horecafrica.com"
+        run: echo "🎉 Application deployed strictly to https://app.horecafrica.org"
