@@ -15,7 +15,9 @@ export const CvModal: React.FC<CvModalProps> = ({ user, onClose }) => {
   if (!user) return null;
 
   const isOwnProfile = currentUser && currentUser.id === user.id;
-  const serverHost = (import.meta.env.VITE_SOCKET_URL as string) || 'https://api.horecafrica.org';
+  const rawCvUrl = user.cvUrl;
+  const env = (import.meta as any).env || {};
+  const serverHost = (env.VITE_SOCKET_URL as string) || 'https://api.horecafrica.org';
   const fullCvUrl = rawCvUrl ? (rawCvUrl.startsWith('http') ? rawCvUrl : `${serverHost}${rawCvUrl}`) : null;
   const safeName = user.name.replace(/\s+/g, '_');
 

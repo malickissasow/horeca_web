@@ -1,6 +1,7 @@
 import { User, Meeting, AdminStats, JobOffer, JobApplication, ContactSubmission, ChatMessage } from '../types';
 
-export const API_BASE_URL = (import.meta.env.VITE_API_URL as string) || (import.meta.env.MODE === 'test' ? 'http://localhost:5000/api' : 'https://api.horecafrica.org/api');
+const env = (import.meta as any).env || {};
+export const API_BASE_URL = (env.VITE_API_URL as string) || (env.MODE === 'test' ? 'http://localhost:5000/api' : 'https://api.horecafrica.org/api');
 
 export const apiService = {
   async login(email: string, pass: string): Promise<User> {
