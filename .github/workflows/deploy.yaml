@@ -11,6 +11,7 @@ on:
       - 'package-lock.json'
       - 'vite.config.ts'
       - '.github/workflows/**'
+      - '.github/scripts/**'
   workflow_dispatch:
 
 jobs:
@@ -42,21 +43,8 @@ jobs:
           fi
           echo "✅ Build successful! dist directory ready."
 
-      - name: 📤 FTP Deploy to Hostinger via lftp
-        run: |
-          sudo apt-get update && sudo apt-get install -y lftp
-          lftp -e "
-            set ftp:ssl-allow yes;
-            set ftp:ssl-force no;
-            set ssl:verify-certificate no;
-            set ftp:passive-mode yes;
-            set net:timeout 15;
-            set net:max-retries 3;
-            open ftp://92.113.24.18:21;
-            user u208608546.app.horecafrica.org 'B5@9ll@c';
-            mirror -R --delete --verbose --exclude-glob .git* ./dist /public_html;
-            quit;
-          "
+      - name: 📤 FTP Deploy to Hostinger via Python Script
+        run: python3 .github/scripts/deploy_ftp.py
 
       - name: Deployment Summary
         run: echo "🎉 Application deployed strictly to https://app.horecafrica.org"
