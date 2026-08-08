@@ -80,7 +80,7 @@ export const HomePage: React.FC = () => {
           </div>
 
           <h1 className="hero-title">
-            HORECA Africa test <span>Business Week 2026</span>
+            HORECA Africa  <span>Business Week 2026</span>
           </h1>
           <p className="hero-subtitle">
             {t('heroSubtitle')}
