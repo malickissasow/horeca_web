@@ -10,7 +10,6 @@ import {
   mockAdminStats,
   mockContact,
 } from './fixtures';
-
 const API = 'http://localhost:5000/api';
 
 export const handlers = [

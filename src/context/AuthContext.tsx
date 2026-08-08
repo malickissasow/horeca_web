@@ -3,7 +3,7 @@ import { io, Socket } from 'socket.io-client';
 import { User } from '../types';
 import { apiService } from '../services/api';
 
-const SOCKET_URL = 'http://localhost:5000';
+const SOCKET_URL = (import.meta.env.VITE_SOCKET_URL as string) || (import.meta.env.MODE === 'test' ? 'http://localhost:5000' : 'https://api.horecafrica.org');
 
 interface AuthContextType {
   currentUser: User | null;

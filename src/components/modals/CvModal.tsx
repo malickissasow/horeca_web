@@ -15,8 +15,8 @@ export const CvModal: React.FC<CvModalProps> = ({ user, onClose }) => {
   if (!user) return null;
 
   const isOwnProfile = currentUser && currentUser.id === user.id;
-  const rawCvUrl = user.cvUrl;
-  const fullCvUrl = rawCvUrl ? (rawCvUrl.startsWith('http') ? rawCvUrl : `http://localhost:5000${rawCvUrl}`) : null;
+  const serverHost = (import.meta.env.VITE_SOCKET_URL as string) || 'https://api.horecafrica.org';
+  const fullCvUrl = rawCvUrl ? (rawCvUrl.startsWith('http') ? rawCvUrl : `${serverHost}${rawCvUrl}`) : null;
   const safeName = user.name.replace(/\s+/g, '_');
 
   // Detect file extension
