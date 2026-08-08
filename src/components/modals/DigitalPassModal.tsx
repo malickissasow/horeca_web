@@ -15,8 +15,8 @@ export const DigitalPassModal: React.FC<DigitalPassModalProps> = ({ user, onClos
   };
 
   return (
-    <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '460px', padding: '0', overflow: 'hidden', background: 'transparent', boxShadow: 'none' }}>
+    <div className="modal-overlay active" onClick={onClose}>
+      <div className="modal-container" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '460px', padding: '0', overflow: 'hidden', background: 'transparent', boxShadow: 'none', border: 'none' }}>
         
         {/* BADGE CARD CONTAINER */}
         <div style={{ background: 'white', borderRadius: '16px', border: '2px solid var(--accent)', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}>

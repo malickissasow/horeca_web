@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useI18n } from '../context/I18nContext';
 import { apiService } from '../services/api';
+import { ExhibitorBudgetCalculator } from '../components';
 
 export const PricingPage: React.FC = () => {
   const { setCurrentPage, showToast, currentUser } = useAuth();
+  const { t, formatPrice, currency } = useI18n();
   const [loadingPack, setLoadingPack] = useState<string | null>(null);
 
   const handlePayWave = async (packName: string, amount: number) => {
@@ -14,13 +17,13 @@ export const PricingPage: React.FC = () => {
 
     setLoadingPack(packName);
     try {
-      showToast(`🌊 Initialisation du paiement Wave pour le ${packName}...`);
+      showToast(`🌊 Initialisation du paiement pour le ${packName}...`);
       const res = await apiService.createWaveCheckout(amount, packName, currentUser?.email);
       if (res.wave_launch_url) {
         window.location.href = res.wave_launch_url;
       }
     } catch (err: any) {
-      showToast(err.message || 'Erreur lors du paiement Wave');
+      showToast(err.message || 'Erreur lors du paiement');
     } finally {
       setLoadingPack(null);
     }
@@ -29,114 +32,164 @@ export const PricingPage: React.FC = () => {
   return (
     <div>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--primary)' }}>
-          Offres & Tarifs d'Accès <span style={{ color: 'var(--accent)' }}>2026</span>
+        <span className="badge badge-sector" style={{ marginBottom: '12px', display: 'inline-block' }}>
+          📍 {t('venue')} · {t('dates')}
+        </span>
+        <h2 style={{ fontSize: '2.4rem', fontWeight: 900, color: 'var(--primary)' }}>
+          {t('pricingTitle')}
         </h2>
-        <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '680px', margin: '8px auto 0' }}>
-          Choisissez la formule adaptée à vos objectifs B2B, d'exposition ou de recrutement RH pour les 25 & 26 Novembre 2026.
+        <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', maxWidth: '720px', margin: '10px auto 0', lineHeight: '1.6' }}>
+          {t('pricingSubtitle')}
         </p>
       </div>
 
-      <div className="grid-4" style={{ alignItems: 'stretch' }}>
-        {/* PACK 1: VISITEUR PRO */}
+      <div className="grid-4" style={{ alignItems: 'stretch', marginBottom: '44px' }}>
+        {/* STAND 1: DECOUVERTE 6M2 */}
         <div className="pricing-card">
           <div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary)' }}>Pass Visiteur Pro</h3>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Accès conférences & salon</p>
-            <div className="price-amount">25 000 FCFA</div>
-            <div className="price-sub">par participant · 2 jours</div>
+            <span className="badge badge-role" style={{ marginBottom: '8px', display: 'inline-block' }}>Stand Découverte</span>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary)' }}>Stand 6 m²</h3>
+            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Stand équipé &amp; 2 Badges</p>
+            <div className="price-amount">{formatPrice(200000)}</div>
+            <div className="price-sub">≈ 305 € TTC · 27 &amp; 28 Nov</div>
 
             <ul className="pricing-features">
-              <li><i className="fas fa-check-circle"></i> Accès aux 2 jours d'exposition</li>
-              <li><i className="fas fa-check-circle"></i> Entrée aux conférences & panels</li>
-              <li><i className="fas fa-check-circle"></i> Badge digital & QR Pass</li>
-              <li><i className="fas fa-times-circle" style={{ color: 'var(--gray-300)' }}></i> <span style={{ color: 'var(--text-muted)' }}>Matchmaking B2B sur table</span></li>
+              <li><i className="fas fa-check-circle"></i> Stand équipé (cloisons, enseigne)</li>
+              <li><i className="fas fa-check-circle"></i> 1 table + 2 chaises</li>
+              <li><i className="fas fa-check-circle"></i> 1 prise électrique</li>
+              <li><i className="fas fa-check-circle"></i> 2 badges exposants inclus</li>
+              <li><i className="fas fa-check-circle"></i> Listing dans le catalogue &amp; le site</li>
+              <li><i className="fas fa-check-circle"></i> Accès au Business Matching B2B</li>
             </ul>
           </div>
           <button
             className="btn btn-outline"
             style={{ width: '100%' }}
-            disabled={loadingPack === 'Pass Visiteur Pro'}
-            onClick={() => handlePayWave('Pass Visiteur Pro', 25000)}
+            disabled={loadingPack === 'Stand Découverte 6m²'}
+            onClick={() => handlePayWave('Stand Découverte 6m²', 200000)}
           >
-            {loadingPack === 'Pass Visiteur Pro' ? 'Wave en cours...' : '🌊 Payer 25 000 F via Wave'}
+            {loadingPack === 'Stand Découverte 6m²' ? 'Paiement en cours...' : `💳 Payer ${formatPrice(200000)}`}
           </button>
         </div>
 
-        {/* PACK 2: B2B MATCHMAKER (FEATURED) */}
-        <div className="pricing-card featured">
-          <div className="featured-badge">RECOMMANDÉ PRO</div>
+        {/* STAND 2: BUSINESS 9M2 */}
+        <div className="pricing-card">
           <div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary)' }}>Pass B2B Matchmaker</h3>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>RDV B2B Ciblés & Agenda</p>
-            <div className="price-amount">150 000 FCFA</div>
-            <div className="price-sub">par entreprise · 2 jours</div>
+            <span className="badge badge-sector" style={{ marginBottom: '8px', display: 'inline-block' }}>Stand Business</span>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary)' }}>Stand 9 m²</h3>
+            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Stand équipé &amp; Communication</p>
+            <div className="price-amount">{formatPrice(350000)}</div>
+            <div className="price-sub">≈ 534 € TTC · 27 &amp; 28 Nov</div>
 
             <ul className="pricing-features">
-              <li><i className="fas fa-check-circle"></i> Tout le Pass Visiteur Pro</li>
-              <li><i className="fas fa-check-circle"></i> <strong>Agenda RDV B2B Garantis</strong></li>
-              <li><i className="fas fa-check-circle"></i> Attribution de Tables Numérotées</li>
-              <li><i className="fas fa-check-circle"></i> Accès Annuaire Décideurs</li>
+              <li><i className="fas fa-check-circle"></i> Stand équipé (cloisons, enseigne)</li>
+              <li><i className="fas fa-check-circle"></i> 1 table + 3 chaises</li>
+              <li><i className="fas fa-check-circle"></i> 1 prise électrique</li>
+              <li><i className="fas fa-check-circle"></i> 4 badges exposants inclus</li>
+              <li><i className="fas fa-check-circle"></i> Listing catalogue &amp; communication digitale</li>
+              <li><i className="fas fa-check-circle"></i> Accès prioritaire Business Matching</li>
             </ul>
           </div>
           <button
             className="btn btn-accent"
             style={{ width: '100%' }}
-            disabled={loadingPack === 'Pass B2B Matchmaker'}
-            onClick={() => handlePayWave('Pass B2B Matchmaker', 150000)}
+            disabled={loadingPack === 'Stand Business 9m²'}
+            onClick={() => handlePayWave('Stand Business 9m²', 350000)}
           >
-            {loadingPack === 'Pass B2B Matchmaker' ? 'Wave en cours...' : '🌊 Payer 150 000 F via Wave'}
+            {loadingPack === 'Stand Business 9m²' ? 'Paiement en cours...' : `💳 Payer ${formatPrice(350000)}`}
           </button>
         </div>
 
-        {/* PACK 3: EXPOSANT & JOB DATING */}
-        <div className="pricing-card">
+        {/* STAND 3: PREMIUM 12M2 (FEATURED) */}
+        <div className="pricing-card featured">
+          <div className="featured-badge">STAR EXPOSANTS</div>
           <div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary)' }}>Pack Stand & Recrutement</h3>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Stand Dédié & Job Dating RH</p>
-            <div className="price-amount">450 000 FCFA</div>
-            <div className="price-sub">Stand 6m² équipé · Novotel</div>
+            <span className="badge badge-sector" style={{ marginBottom: '8px', display: 'inline-block' }}>Stand Premium</span>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary)' }}>Stand 12 m²</h3>
+            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Emplacement privilégié &amp; Écran TV</p>
+            <div className="price-amount">{formatPrice(450000)}</div>
+            <div className="price-sub">≈ 686 € TTC · 27 &amp; 28 Nov</div>
 
             <ul className="pricing-features">
-              <li><i className="fas fa-check-circle"></i> Stand d'exposition 6m² équipé</li>
-              <li><i className="fas fa-check-circle"></i> <strong>Espace Recrutement RH / CVs</strong></li>
-              <li><i className="fas fa-check-circle"></i> RDV B2B Illimités sur Stand</li>
-              <li><i className="fas fa-check-circle"></i> Visibilité Catalogue Officiel</li>
+              <li><i className="fas fa-check-circle"></i> Emplacement privilégié sur le salon</li>
+              <li><i className="fas fa-check-circle"></i> Stand sur-mesure équipé</li>
+              <li><i className="fas fa-check-circle"></i> 1 table + 4 chaises + 1 comptoir</li>
+              <li><i className="fas fa-check-circle"></i> <strong>1 écran TV de présentation</strong></li>
+              <li><i className="fas fa-check-circle"></i> 6 badges exposants inclus</li>
+              <li><i className="fas fa-check-circle"></i> Visibilité renforcée &amp; RDV B2B VIP</li>
+            </ul>
+          </div>
+          <button
+            className="btn btn-accent"
+            style={{ width: '100%' }}
+            disabled={loadingPack === 'Stand Premium 12m²'}
+            onClick={() => handlePayWave('Stand Premium 12m²', 450000)}
+          >
+            {loadingPack === 'Stand Premium 12m²' ? 'Paiement en cours...' : `💳 Payer ${formatPrice(450000)}`}
+          </button>
+        </div>
+
+        {/* STAND 4: PRESTIGE 18M2 */}
+        <div className="pricing-card" style={{ borderColor: 'var(--purple)' }}>
+          <div>
+            <span className="badge badge-student" style={{ marginBottom: '8px', display: 'inline-block' }}>Stand Prestige</span>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--purple)' }}>Stand 18 m²</h3>
+            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Visibilité Maximale &amp; Sur-mesure</p>
+            <div className="price-amount" style={{ color: 'var(--purple)' }}>{formatPrice(600000)}</div>
+            <div className="price-sub">≈ 915 € TTC · 27 &amp; 28 Nov</div>
+
+            <ul className="pricing-features">
+              <li><i className="fas fa-check-circle"></i> Emplacement Premium d&apos;entrée</li>
+              <li><i className="fas fa-check-circle"></i> Stand sur-mesure haut de gamme</li>
+              <li><i className="fas fa-check-circle"></i> Mobilier lounge + comptoir d&apos;accueil</li>
+              <li><i className="fas fa-check-circle"></i> 1 écran TV + 8 badges exposants</li>
+              <li><i className="fas fa-check-circle"></i> Visibilité maximale sur tous les supports</li>
+              <li><i className="fas fa-check-circle"></i> Accès prioritaire Hosted Buyers VIP</li>
             </ul>
           </div>
           <button
             className="btn btn-purple"
             style={{ width: '100%' }}
-            disabled={loadingPack === 'Pack Stand & Recrutement'}
-            onClick={() => handlePayWave('Pack Stand & Recrutement', 450000)}
+            disabled={loadingPack === 'Stand Prestige 18m²'}
+            onClick={() => handlePayWave('Stand Prestige 18m²', 600000)}
           >
-            {loadingPack === 'Pack Stand & Recrutement' ? 'Wave en cours...' : '🌊 Payer 450 000 F via Wave'}
+            {loadingPack === 'Stand Prestige 18m²' ? 'Paiement en cours...' : `💳 Payer ${formatPrice(600000)}`}
           </button>
         </div>
+      </div>
 
-        {/* PACK 4: CANDIDAT RH / ETUDIANT */}
-        <div className="pricing-card" style={{ borderColor: 'var(--purple)' }}>
+      {/* EXHIBITOR BUDGET & TRAVEL CALCULATOR SECTION */}
+      <div id="calculator-section" style={{ marginBottom: '44px' }}>
+        <ExhibitorBudgetCalculator />
+      </div>
+
+      {/* SECURE PAYMENT BANNER */}
+      <div
+        className="card"
+        style={{
+          marginTop: '36px',
+          background: 'linear-gradient(135deg, #022068 0%, #033498 100%)',
+          color: 'white',
+          padding: '24px 32px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '16px'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <i className="fas fa-shield-alt text-accent" style={{ fontSize: '2.4rem' }}></i>
           <div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--purple)' }}>Pass Job Dating RH</h3>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Candidats & Étudiants HORECA</p>
-            <div className="price-amount" style={{ color: 'var(--purple)' }}>GRATUIT</div>
-            <div className="price-sub">sur sélection de CV</div>
-
-            <ul className="pricing-features">
-              <li><i className="fas fa-check-circle"></i> Publication du CV dans la CVthèque</li>
-              <li><i className="fas fa-check-circle"></i> <strong>Entretiens avec les DRH</strong></li>
-              <li><i className="fas fa-check-circle"></i> Accès Espace Job Dating RH</li>
-              <li><i className="fas fa-check-circle"></i> Badge Digital Recrutement</li>
-            </ul>
+            <h4 style={{ color: 'white', fontWeight: 800, fontSize: '1.15rem' }}>Paiement Sécurisé ({currency}) &amp; Facture Proforma</h4>
+            <p style={{ fontSize: '0.86rem', color: 'rgba(255,255,255,0.85)' }}>
+              Wave Mobile Money, Orange Money, Virement Bancaire SWIFT ou Chèque à l&apos;ordre de Demba Conciergerie Luxury DMC / Comité HORECA Africa.
+            </p>
           </div>
-          <button
-            className="btn btn-outline"
-            style={{ width: '100%', borderColor: 'var(--purple)', color: 'var(--purple)' }}
-            onClick={() => setCurrentPage('register')}
-          >
-            🎓 Inscription Gratuite (CV)
-          </button>
         </div>
+        <a href="https://wa.me/221775428235" target="_blank" rel="noopener noreferrer" className="btn btn-accent btn-sm">
+          <i className="fab fa-whatsapp"></i> Demander un devis / proforma ({currency})
+        </a>
       </div>
     </div>
   );

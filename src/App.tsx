@@ -18,6 +18,7 @@ import { MeetingsPage } from './pages/MeetingsPage';
 import { DayPassPage } from './pages/DayPassPage';
 import { AdminPage } from './pages/AdminPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { HostedBuyersPage } from './pages/HostedBuyersPage';
 
 
 export const App: React.FC = () => {
@@ -42,6 +43,7 @@ export const App: React.FC = () => {
           {currentPage === 'search' && <MatchmakingPage />}
           {currentPage === 'jobs' && <JobsPage />}
           {currentPage === 'register' && <RegisterPage />}
+          {currentPage === 'hosted' && <HostedBuyersPage />}
 
           {/* PROTECTED PAGES */}
           {currentPage === 'meetings' && (
@@ -100,4 +102,3 @@ export const App: React.FC = () => {
     </div>
   );
 };
-

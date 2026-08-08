@@ -22,12 +22,42 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClose }) => 
   const [looking, setLooking] = useState<string[]>(user.looking || []);
   const [newPass, setNewPass] = useState('');
   const [loading, setLoading] = useState(false);
+  const [uploadingCv, setUploadingCv] = useState(false);
 
   const toggleSector = (sec: string) => {
     if (looking.includes(sec)) {
       setLooking(looking.filter(s => s !== sec));
     } else {
       setLooking([...looking, sec]);
+    }
+  };
+
+  const handleCvUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const validExts = ['.pdf', '.doc', '.docx', '.png', '.jpg', '.jpeg', '.webp'];
+    const isValid = validExts.some((ext) => file.name.toLowerCase().endsWith(ext));
+
+    if (!isValid) {
+      showToast('❌ Formats autorisés : PDF, Word (DOC/DOCX), Images (PNG, JPG, WEBP)');
+      return;
+    }
+
+    setUploadingCv(true);
+    try {
+      showToast('📄 Téléversement de votre fichier CV en cours...');
+      const res = await apiService.uploadCv(user.id, file);
+      showToast('✅ Votre CV a été mis à jour avec succès !');
+      setCurrentUser({
+        ...user,
+        cvAttached: true,
+        cvUrl: res.cvUrl
+      });
+    } catch (err: any) {
+      showToast(err.message || 'Erreur lors du téléversement du fichier CV');
+    } finally {
+      setUploadingCv(false);
     }
   };
 
@@ -44,7 +74,11 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClose }) => 
         looking,
         pass: newPass || undefined
       });
-      setCurrentUser(updatedUser);
+      setCurrentUser({
+        ...updatedUser,
+        cvUrl: user.cvUrl || updatedUser.cvUrl,
+        cvAttached: user.cvAttached || updatedUser.cvAttached
+      });
       showToast('Profil mis à jour avec succès !');
       onClose();
     } catch (err: any) {
@@ -55,8 +89,8 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClose }) => 
   };
 
   return (
-    <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '600px' }}>
+    <div className="modal-overlay active" onClick={onClose}>
+      <div className="modal-container" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '640px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary)' }}>
             <i className="fas fa-user-gear text-accent"></i> Mon Profil Participant
@@ -114,15 +148,40 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ user, onClose }) => 
           </div>
 
           {user.role === 'Étudiant' && (
-            <div className="form-group">
-              <label className="form-label">Poste recherché / Titre étudiant</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="ex: Assistant Manager Restauration"
-                value={studentJob}
-                onChange={(e) => setStudentJob(e.target.value)}
-              />
+            <div style={{ background: 'rgba(139,92,246,0.08)', border: '1.5px dashed var(--purple)', padding: '18px', borderRadius: 'var(--radius-md)', marginBottom: '18px' }}>
+              <div className="form-group" style={{ marginBottom: '14px' }}>
+                <label className="form-label" style={{ color: 'var(--purple)', fontWeight: 700 }}>
+                  <i className="fas fa-briefcase"></i> Poste recherché pour Job Dating RH
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="ex: Assistant Manager Restauration / Chef de Rang"
+                  value={studentJob}
+                  onChange={(e) => setStudentJob(e.target.value)}
+                />
+              </div>
+
+              <div className="form-group" style={{ marginBottom: 0 }}>
+                <label className="form-label" style={{ color: 'var(--purple)', fontWeight: 700 }}>
+                  <i className="fas fa-file-upload"></i> Mon Fichier CV (Word, PDF ou Image)
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                  <label className="btn btn-purple btn-sm" style={{ margin: 0, cursor: 'pointer' }}>
+                    <i className="fas fa-cloud-upload-alt"></i> {uploadingCv ? 'Téléversement...' : 'Mettre à jour mon CV'}
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.webp"
+                      style={{ display: 'none' }}
+                      onChange={handleCvUpload}
+                      disabled={uploadingCv}
+                    />
+                  </label>
+                  <span style={{ fontSize: '0.84rem', color: user.cvUrl ? 'var(--purple)' : 'var(--text-muted)', fontWeight: 600 }}>
+                    {user.cvUrl ? `📄 CV actuellement en ligne` : 'Aucun fichier CV téléversé'}
+                  </span>
+                </div>
+              </div>
             </div>
           )}
 

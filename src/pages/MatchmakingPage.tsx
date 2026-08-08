@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { User } from '../types';
 import { apiService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { BookingModal, CvModal, ChatModal } from '../components';
+import { useI18n } from '../context/I18nContext';
+import { BookingModal, CvModal, ChatModal, SenegalTourismShowcase } from '../components';
 
 export const MatchmakingPage: React.FC = () => {
   const { currentUser, showToast } = useAuth();
+  const { t } = useI18n();
   const [users, setUsers] = useState<User[]>([]);
   const [searchKw, setSearchKw] = useState('');
   const [roleFilter, setRoleFilter] = useState('');
@@ -44,13 +46,18 @@ export const MatchmakingPage: React.FC = () => {
 
   return (
     <div>
+      {/* SENEGAL TOURISM & TERANGA SHOWCASE BANNER */}
+      <div style={{ marginBottom: '28px' }}>
+        <SenegalTourismShowcase />
+      </div>
+
       <div className="card">
         <div className="card-header">
           <h3 className="card-title">
-            <i className="fas fa-magic text-accent"></i> Moteur de Matchmaking B2B & Intelligence HORECA
+            <i className="fas fa-magic text-accent"></i> Moteur de Matchmaking B2B &amp; Intelligence HORECA
           </h3>
           <span className="badge badge-sector" id="resultsTag" style={{ fontSize: '0.85rem' }}>
-            {filteredUsers.length} Décideurs & Talents
+            {filteredUsers.length} Décideurs &amp; Talents
           </span>
         </div>
 
@@ -61,7 +68,7 @@ export const MatchmakingPage: React.FC = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="ex: Novotel, Manager, Orange..."
+              placeholder="ex: Novotel, Manager, Terrou-Bi..."
               value={searchKw}
               onChange={(e) => setSearchKw(e.target.value)}
             />
@@ -84,7 +91,7 @@ export const MatchmakingPage: React.FC = () => {
               <option value="Hôtellerie">Hôtellerie</option>
               <option value="Restauration">Restauration</option>
               <option value="Institutions">Institutions</option>
-              <option value="DMC">DMC</option>
+              <option value="DMC">DMC &amp; Agences Receptives</option>
               <option value="Agences de voyages">Agences de voyages</option>
               <option value="Équipementiers">Équipementiers</option>
               <option value="Banques">Banques</option>

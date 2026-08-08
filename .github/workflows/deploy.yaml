@@ -1,0 +1,58 @@
+name: Deploy Web to app.horecafrica.org (Isolated Subdomain FTP)
+
+on:
+  push:
+    branches: [ main, production ]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.ts'
+      - '.github/workflows/**'
+  workflow_dispatch:
+
+jobs:
+  deploy-app-horecafrica:
+    name: 🚀 Isolated Deploy to app.horecafrica.org
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production bundle
+        run: npm run build
+        env:
+          VITE_API_URL: https://api.horecafrica.org/api
+
+      - name: Verify build output
+        run: |
+          if [ ! -f "dist/index.html" ]; then
+            echo "❌ Build failed: dist/index.html not found"
+            exit 1
+          fi
+          echo "✅ Build successful! dist directory ready."
+
+      - name: 📤 FTP Deploy strictly to app.horecafrica.org public_html
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 92.113.24.18
+          username: u208608546.app.horecafrica.org
+          password: B5@9ll@c
+          port: 21
+          server-dir: public_html/
+          local-dir: dist/
+          dangerous-clean-slate: false
+          state-name: .ftp-deploy-sync-state.json
+
+      - name: Deployment Summary
+        run: echo "🎉 Application deployed strictly to https://app.horecafrica.org without affecting api.horecafrica.org or horecafrica.com"

@@ -6,7 +6,7 @@ export const Countdown: React.FC = () => {
   useEffect(() => {
     const targetDate = new Date('November 25, 2026 09:00:00').getTime();
 
-    const interval = setInterval(() => {
+    const calculateTime = () => {
       const now = new Date().getTime();
       const diff = targetDate - now;
       if (diff > 0) {
@@ -17,10 +17,14 @@ export const Countdown: React.FC = () => {
           seconds: Math.floor((diff % (1000 * 60)) / 1000)
         });
       }
-    }, 1000);
+    };
+
+    calculateTime();
+    const interval = setInterval(calculateTime, 1000);
 
     return () => clearInterval(interval);
   }, []);
+
 
   return (
     <div className="countdown-box">
