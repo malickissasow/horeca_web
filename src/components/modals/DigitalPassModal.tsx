@@ -14,6 +14,8 @@ export const DigitalPassModal: React.FC<DigitalPassModalProps> = ({ user, onClos
     window.print();
   };
 
+  const isActive = user.isSuperAdmin || user.isActive !== false;
+
   return (
     <div className="modal-overlay active" onClick={onClose}>
       <div className="modal-container" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '460px', padding: '0', overflow: 'hidden', background: 'transparent', boxShadow: 'none', border: 'none' }}>
@@ -39,11 +41,18 @@ export const DigitalPassModal: React.FC<DigitalPassModalProps> = ({ user, onClos
           {/* BADGE BODY */}
           <div style={{ padding: '24px', textAlign: 'center' }}>
             
+            {!isActive && (
+              <div style={{ background: '#fff7ed', border: '1px dashed #ea580c', borderRadius: '8px', padding: '10px 14px', marginBottom: '14px', fontSize: '0.82rem', color: '#c2410c', fontWeight: 700 }}>
+                ⏳ <strong>STATUT ACCÈS : EN ATTENTE DE VALIDATION DU PAIEMENT</strong><br />
+                <span style={{ fontWeight: 'normal', fontSize: '0.78rem' }}>Ce pass s'activera automatiquement dès confirmation de l'administrateur.</span>
+              </div>
+            )}
+
             {/* ROLE BADGE */}
             <span
               className="badge"
               style={{
-                background: user.isSuperAdmin ? 'var(--danger)' : user.role === 'Sponsor' ? '#fbbf24' : user.role === 'Exposant' ? 'var(--purple)' : 'var(--accent)',
+                background: user.isSuperAdmin ? 'var(--danger)' : !isActive ? '#ea580c' : user.role === 'Sponsor' ? '#fbbf24' : user.role === 'Exposant' ? 'var(--purple)' : 'var(--accent)',
                 color: 'white',
                 fontSize: '0.9rem',
                 padding: '6px 16px',
@@ -53,44 +62,45 @@ export const DigitalPassModal: React.FC<DigitalPassModalProps> = ({ user, onClos
                 marginBottom: '16px'
               }}
             >
-              {user.isSuperAdmin ? 'ORGANISATEUR / ADMIN' : user.role.toUpperCase()}
+              {user.isSuperAdmin ? 'ORGANISATEUR / ADMIN' : !isActive ? 'ACCÈS EN ATTENTE' : user.role.toUpperCase()}
             </span>
 
             <h3 style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '4px' }}>
               {user.name}
             </h3>
-            <p style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '16px' }}>
+            <p style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--accent)', marginBottom: '16px' }}>
               {user.company}
             </p>
 
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginBottom: '20px' }}>
-              <span className="badge badge-sector" style={{ fontSize: '0.8rem' }}>📍 Secteur: {user.sector}</span>
-              <span className="badge badge-sector" style={{ fontSize: '0.8rem' }}>🆔 ID: #{user.id}</span>
-            </div>
-
             {/* QR CODE CONTAINER */}
-            <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '12px', display: 'inline-block', border: '1px dashed var(--gray-300)', marginBottom: '16px' }}>
-              <img src={qrUrl} alt="Badge QR Code" width={160} height={160} style={{ display: 'block' }} />
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '8px', fontWeight: 600 }}>
-                Scannez à l'entrée du Salon B2B
+            <div style={{ background: 'var(--gray-100)', padding: '16px', borderRadius: '12px', display: 'inline-block', border: '1px border var(--gray-200)', marginBottom: '16px' }}>
+              <img
+                src={qrUrl}
+                alt="QR Code Badge HORECA"
+                style={{ width: '160px', height: '160px', borderRadius: '8px', opacity: isActive ? 1 : 0.4 }}
+              />
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '8px', fontFamily: 'monospace', fontWeight: 700 }}>
+                {user.email}
               </div>
             </div>
 
-            {/* ACTION BUTTONS */}
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '20px' }}>
+              <i className="fas fa-info-circle text-accent"></i> Présentez ce pass numérique à l'accueil du Novotel Dakar pour obtenir votre badge physique.
+            </div>
+
+            {/* ACTIONS */}
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
-              <button className="btn btn-accent" style={{ flex: 1 }} onClick={handlePrint}>
-                <i className="fas fa-print"></i> Imprimer / Télécharger Pass
+              <button className="btn btn-accent btn-sm" onClick={handlePrint}>
+                <i className="fas fa-print"></i> Imprimer / Télécharger
+              </button>
+              <button className="btn btn-outline btn-sm" onClick={onClose}>
+                Fermer
               </button>
             </div>
 
           </div>
-
-          {/* BADGE FOOTER */}
-          <div style={{ background: '#f1f5f9', padding: '12px', textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-muted)', borderTop: '1px solid #e2e8f0' }}>
-            Accès coupe-file aux conférences & espaces de rendez-vous B2B
-          </div>
-
         </div>
+
       </div>
     </div>
   );

@@ -28,6 +28,7 @@ export interface User {
   cvAttached?: boolean;
   cvUrl?: string;
   isSuperAdmin?: boolean;
+  isActive?: boolean;
   looking?: string[];
   blockedSlots?: string[];
 }

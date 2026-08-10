@@ -44,6 +44,13 @@ export const apiService = {
     if (!res.ok) throw new Error('Erreur suppression utilisateur');
   },
 
+  async toggleUserActive(userId: number): Promise<{ success: boolean; isActive: boolean; message: string }> {
+    const res = await fetch(`${API_BASE_URL}/users/${userId}/toggle-active`, { method: 'POST' });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Erreur modification statut utilisateur');
+    return data;
+  },
+
   async getDemoUser(key: string): Promise<User> {
     const res = await fetch(`${API_BASE_URL}/auth/demo/${key}`);
     const data = await res.json();
