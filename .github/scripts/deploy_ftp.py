@@ -12,9 +12,8 @@ LOCAL_DIR = os.getenv("LOCAL_DIR", "dist")
 REMOTE_DIR = os.getenv("REMOTE_DIR", "public_html")
 
 def connect_ftp():
-    print(f"🚀 Connecting to FTP {FTP_HOST}:{FTP_PORT}...")
+    print(f"🚀 Connecting to Hostinger FTP {FTP_HOST}:{FTP_PORT} via FTPS (Explicit TLS)...")
     for attempt in range(1, 4):
-        # Try FTPS (Explicit TLS)
         try:
             print(f"🔒 Attempt {attempt}/3: Connecting via FTPS (TLS)...")
             context = ssl.create_default_context()
@@ -23,7 +22,7 @@ def connect_ftp():
 
             ftps = ftplib.FTP_TLS(context=context)
             ftps.trust_server_pasv_ipv4_address = True
-            ftps.connect(FTP_HOST, FTP_PORT, timeout=15)
+            ftps.connect(FTP_HOST, FTP_PORT, timeout=45)
             ftps.login(FTP_USER, FTP_PASS)
             ftps.prot_p()  # Enforce encrypted data channel
             ftps.set_pasv(True)
@@ -31,23 +30,9 @@ def connect_ftp():
             return ftps
         except Exception as e:
             print(f"⚠️ FTPS Attempt {attempt} failed ({e})")
-
-        # Try Plain FTP
-        try:
-            print(f"⚡ Attempt {attempt}/3: Connecting via Plain FTP...")
-            ftp = ftplib.FTP()
-            ftp.trust_server_pasv_ipv4_address = True
-            ftp.connect(FTP_HOST, FTP_PORT, timeout=15)
-            ftp.login(FTP_USER, FTP_PASS)
-            ftp.set_pasv(True)
-            print("✅ Connected & Logged in via Plain FTP!")
-            return ftp
-        except Exception as e:
-            print(f"⚠️ Plain FTP Attempt {attempt} failed ({e})")
-
-        if attempt < 3:
-            print("⏳ Waiting 3 seconds before next retry...")
-            time.sleep(3)
+            if attempt < 3:
+                print("⏳ Waiting 4 seconds before next retry...")
+                time.sleep(4)
 
     raise RuntimeError(f"❌ Failed to connect to Hostinger FTP {FTP_HOST} after 3 attempts.")
 
