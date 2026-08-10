@@ -24,7 +24,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   onSuccess
 }) => {
   const { currentUser, showToast } = useAuth();
-  const [paymentMode, setPaymentMode] = useState<'SELECT' | 'MANUAL_WAVE' | 'MANUAL_OM'>('SELECT');
+  const [method, setMethod] = useState<'MANUAL_WAVE' | 'MANUAL_OM'>('MANUAL_WAVE');
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -37,23 +37,6 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
   const formattedAmount = amount.toLocaleString('fr-FR') + ' FCFA';
 
-  // Direct Wave API Payment
-  const handleWaveDirect = async () => {
-    setLoading(true);
-    try {
-      const res = await apiService.createWaveCheckout(amount, packName, email || currentUser?.email);
-      if (res.wave_launch_url) {
-        window.location.href = res.wave_launch_url;
-      } else {
-        showToast('Erreur d\'initialisation Wave');
-      }
-    } catch (err: any) {
-      showToast(err.message || 'Erreur lors du paiement Wave Direct');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // Submit Manual Payment (Wave / Orange Money to +221 77 542 82 35)
   const handleManualSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,19 +47,19 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
     setLoading(true);
     try {
-      const res = await apiService.submitManualPayment({
+      await apiService.submitManualPayment({
         customerName: name,
         customerEmail: email,
         customerPhone: phone,
         companyName: company,
         packName,
         amount,
-        paymentMethod: paymentMode === 'MANUAL_OM' ? 'MANUAL_OM' : 'MANUAL_WAVE',
+        paymentMethod: method,
         transactionRef: txRef
       });
 
       setSubmitted(true);
-      showToast(' Demande transmise ! L\'admin valide votre paiement et vous recevrez la facture par email.');
+      showToast('🎉 Demande transmise ! L\'administrateur valide votre transfert et vous recevrez la facture par email.');
       if (onSuccess) onSuccess();
     } catch (err: any) {
       showToast(err.message || 'Erreur lors de la soumission du paiement manuel');
@@ -105,14 +88,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
         </button>
 
         {/* Modal Header */}
-        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
           <span className="badge badge-accent" style={{ marginBottom: '8px', display: 'inline-block' }}>
-            💳 Règlement HORECA AFRICA 2026
+            💳 Règlement &amp; Réservation HORECA AFRICA 2026
           </span>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)', margin: '6px 0' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)', margin: '4px 0' }}>
             {packName}
           </h2>
-          <p style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--accent)', margin: 0 }}>
+          <p style={{ fontSize: '1.3rem', fontWeight: 900, color: 'var(--accent)', margin: 0 }}>
             Montant : {formattedAmount}
           </p>
         </div>
@@ -124,122 +107,64 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
               Demande enregistrée avec succès !
             </h3>
             <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '20px' }}>
-              Votre référence de transaction <strong>{txRef}</strong> a été transmise à l'administrateur.<br />
-              Dès validation du transfert au <strong>+221 77 542 82 35</strong>, vous recevrez votre <strong>facture acquittée par email</strong> à <strong>{email}</strong>.
+              Votre référence de transaction <strong>{txRef}</strong> a été transmise au SuperAdmin.<br />
+              Dès confirmation du dépôt au <strong>+221 77 542 82 35</strong>, votre <strong>facture acquittée</strong> sera envoyée par email à <strong>{email}</strong>.
             </p>
             <button className="btn btn-accent" onClick={onClose} style={{ width: '100%' }}>
-              Fermer et Retourner à l'Accueil
-            </button>
-          </div>
-        ) : paymentMode === 'SELECT' ? (
-          /* Selection Screen */
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textAlign: 'center', marginBottom: '8px' }}>
-              Choisissez votre méthode de règlement préférée :
-            </p>
-
-            {/* Option 1: Wave Direct API */}
-            <button
-              onClick={handleWaveDirect}
-              disabled={loading}
-              className="card-hover"
-              style={{
-                display: 'flex', alignItems: 'center', gap: '16px', padding: '16px',
-                borderRadius: 'var(--radius-md)', border: '2px solid #1dcaff',
-                background: 'linear-gradient(135deg, rgba(29, 202, 255, 0.08) 0%, rgba(3, 52, 152, 0.05) 100%)',
-                cursor: 'pointer', textAlign: 'left', width: '100%'
-              }}
-            >
-              <div style={{ fontSize: '2rem' }}>🌊</div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--primary)' }}>
-                  Paiement Direct Wave API (Automatique)
-                </div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                  Paiement instantané sécurisé par l'application Wave
-                </div>
-              </div>
-              <i className="fas fa-chevron-right" style={{ color: '#1dcaff' }}></i>
-            </button>
-
-            {/* Option 2: Manual Wave Transfer to +221 77 542 82 35 */}
-            <button
-              onClick={() => setPaymentMode('MANUAL_WAVE')}
-              className="card-hover"
-              style={{
-                display: 'flex', alignItems: 'center', gap: '16px', padding: '16px',
-                borderRadius: 'var(--radius-md)', border: '2px solid var(--accent)',
-                background: 'rgba(234, 88, 12, 0.05)',
-                cursor: 'pointer', textAlign: 'left', width: '100%'
-              }}
-            >
-              <div style={{ fontSize: '2rem' }}>📲</div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--primary)' }}>
-                  Transfert Manuel Wave (+221 77 542 82 35)
-                </div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                  Envoyez au 77 542 82 35 et recevez la facture validée par email
-                </div>
-              </div>
-              <i className="fas fa-chevron-right" style={{ color: 'var(--accent)' }}></i>
-            </button>
-
-            {/* Option 3: Manual Orange Money Transfer to +221 77 542 82 35 */}
-            <button
-              onClick={() => setPaymentMode('MANUAL_OM')}
-              className="card-hover"
-              style={{
-                display: 'flex', alignItems: 'center', gap: '16px', padding: '16px',
-                borderRadius: 'var(--radius-md)', border: '2px solid #ff7900',
-                background: 'rgba(255, 121, 0, 0.05)',
-                cursor: 'pointer', textAlign: 'left', width: '100%'
-              }}
-            >
-              <div style={{ fontSize: '2rem' }}>🟧</div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--primary)' }}>
-                  Transfert Manuel Orange Money (+221 77 542 82 35)
-                </div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                  Envoyez au 77 542 82 35 et l'admin valide avec envoi de facture
-                </div>
-              </div>
-              <i className="fas fa-chevron-right" style={{ color: '#ff7900' }}></i>
+              Fermer et Retourner au Site
             </button>
           </div>
         ) : (
-          /* Manual Payment Form */
           <form onSubmit={handleManualSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            <button
-              type="button"
-              onClick={() => setPaymentMode('SELECT')}
-              style={{ background: 'none', border: 'none', color: 'var(--accent)', cursor: 'pointer', fontSize: '0.85rem', textAlign: 'left', padding: 0 }}
-            >
-              &larr; Choisir une autre méthode
-            </button>
+            {/* Method Selector Tabs */}
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button
+                type="button"
+                onClick={() => setMethod('MANUAL_WAVE')}
+                style={{
+                  flex: 1, padding: '12px', borderRadius: 'var(--radius-md)', fontWeight: 800,
+                  fontSize: '0.9rem', cursor: 'pointer', border: method === 'MANUAL_WAVE' ? '2px solid #1dcaff' : '1px solid var(--border-color)',
+                  background: method === 'MANUAL_WAVE' ? 'rgba(29, 202, 255, 0.12)' : 'var(--bg-subtle)',
+                  color: method === 'MANUAL_WAVE' ? '#0284c7' : 'var(--text-muted)'
+                }}
+              >
+                🌊 Transfert Wave
+              </button>
+              <button
+                type="button"
+                onClick={() => setMethod('MANUAL_OM')}
+                style={{
+                  flex: 1, padding: '12px', borderRadius: 'var(--radius-md)', fontWeight: 800,
+                  fontSize: '0.9rem', cursor: 'pointer', border: method === 'MANUAL_OM' ? '2px solid #ff7900' : '1px solid var(--border-color)',
+                  background: method === 'MANUAL_OM' ? 'rgba(255, 121, 0, 0.12)' : 'var(--bg-subtle)',
+                  color: method === 'MANUAL_OM' ? '#ea580c' : 'var(--text-muted)'
+                }}
+              >
+                🟧 Orange Money
+              </button>
+            </div>
 
-            {/* Manual Instruction Box */}
+            {/* Instruction Box */}
             <div style={{
               background: 'linear-gradient(135deg, #033498 0%, #1e1b4b 100%)',
-              color: 'white', padding: '16px', borderRadius: 'var(--radius-md)'
+              color: 'white', padding: '16px', borderRadius: 'var(--radius-md)', border: '1px solid rgba(243, 103, 29, 0.3)'
             }}>
-              <div style={{ fontWeight: 800, fontSize: '0.95rem', marginBottom: '6px' }}>
-                📋 Instructions de Transfert {paymentMode === 'MANUAL_OM' ? 'Orange Money' : 'Wave'} :
+              <div style={{ fontWeight: 800, fontSize: '0.95rem', marginBottom: '6px', color: '#f3671d' }}>
+                📲 Procédure de Règlement {method === 'MANUAL_OM' ? 'Orange Money' : 'Wave'} :
               </div>
-              <ol style={{ margin: '0 0 0 18px', padding: 0, fontSize: '0.85rem', lineHeight: 1.5 }}>
-                <li>Ouvrez votre application {paymentMode === 'MANUAL_OM' ? 'Orange Money' : 'Wave'}.</li>
-                <li>Effectuez un transfert de <strong>{formattedAmount}</strong> au numéro :</li>
-                <li style={{ fontSize: '1.1rem', fontWeight: 900, color: '#fba919', marginTop: '4px' }}>
+              <ol style={{ margin: '0 0 0 18px', padding: 0, fontSize: '0.85rem', lineHeight: 1.55 }}>
+                <li>Ouvrez votre application {method === 'MANUAL_OM' ? 'Orange Money' : 'Wave'}.</li>
+                <li>Effectuez un transfert du montant exact de <strong>{formattedAmount}</strong> au numéro :</li>
+                <li style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fba919', margin: '4px 0' }}>
                   📞 +221 77 542 82 35
                 </li>
-                <li>Notez ou copiez la **Référence de transaction** (ex: TXN-XXXXXX ou le numéro d'envoi).</li>
+                <li>Saisissez ci-dessous le numéro de référence du transfert ou votre numéro expéditeur.</li>
               </ol>
             </div>
 
             <div>
               <label style={{ fontSize: '0.85rem', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
-                Nom Complet du Participant / Représentant *
+                Nom &amp; Prénom du Payeur / Représentant *
               </label>
               <input
                 type="text"
@@ -247,14 +172,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                 required
                 value={name}
                 onChange={e => setName(e.target.value)}
-                placeholder="ex: Malick Sow"
+                placeholder="ex: Massinissa Sow"
               />
             </div>
 
             <div className="grid-2" style={{ gap: '12px' }}>
               <div>
                 <label style={{ fontSize: '0.85rem', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
-                  Email (pour recevoir la Facture) *
+                  Email Pro (pour recevoir la Facture) *
                 </label>
                 <input
                   type="email"
@@ -262,7 +187,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                   required
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  placeholder="contact@entreprise.com"
+                  placeholder="massinissa@entreprise.com"
                 />
               </div>
               <div>
@@ -281,7 +206,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
             <div>
               <label style={{ fontSize: '0.85rem', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
-                Référence / ID du Transfert {paymentMode === 'MANUAL_OM' ? 'Orange Money' : 'Wave'} *
+                Référence / Transaction {method === 'MANUAL_OM' ? 'Orange Money' : 'Wave'} *
               </label>
               <input
                 type="text"
@@ -289,7 +214,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                 required
                 value={txRef}
                 onChange={e => setTxRef(e.target.value)}
-                placeholder="ex: TXN-88492019 ou N° d'expéditeur +221..."
+                placeholder="ex: TXN-99841029 ou Numéro de l'expéditeur"
                 style={{ borderColor: 'var(--accent)', fontWeight: 700 }}
               />
             </div>
@@ -298,9 +223,9 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
               type="submit"
               disabled={loading}
               className="btn btn-accent"
-              style={{ width: '100%', marginTop: '8px', padding: '14px' }}
+              style={{ width: '100%', marginTop: '6px', padding: '14px', fontSize: '1rem', fontWeight: 800 }}
             >
-              {loading ? 'Transmissions...' : ' Transmettre la Demande pour Validation & Facture'}
+              {loading ? 'Soumission en cours...' : ' Demander la Validation SuperAdmin & Ma Facture'}
             </button>
           </form>
         )}
