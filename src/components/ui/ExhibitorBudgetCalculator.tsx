@@ -110,8 +110,115 @@ Pouvez-vous nous envoyer la convention officielle d'exposition ? Merci !`;
     return encodeURIComponent(text);
   };
 
-  const handlePrint = () => {
-    window.print();
+  const handleDownloadPDF = () => {
+    const originLabel = FLIGHT_OPTIONS.find(o => o.id === origin)?.label || origin;
+    const packName = packType === 'stand6' ? 'Stand Découverte 6m²' : packType === 'stand9' ? 'Stand Business 9m²' : packType === 'stand12' ? 'Stand Premium 12m²' : 'Stand Prestige 18m²';
+    const dateStr = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    const refNum = `PRO-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) return;
+
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Proforma HORECA AFRICA 2026 - ${refNum}</title>
+        <style>
+          body { font-family: 'Segoe UI', Arial, sans-serif; padding: 40px; color: #0f172a; max-width: 800px; margin: 0 auto; background: #fff; }
+          .header { display: flex; justify-content: space-between; border-bottom: 3px solid #ea580c; padding-bottom: 20px; margin-bottom: 30px; }
+          .logo-title { font-size: 24px; font-weight: 900; color: #033498; margin: 0; }
+          .subtitle { color: #ea580c; font-size: 14px; font-weight: 700; margin-top: 4px; }
+          .ref-block { text-align: right; font-size: 14px; color: #475569; }
+          .table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+          .table th { background: #f1f5f9; padding: 12px; text-align: left; font-size: 13px; text-transform: uppercase; color: #334155; border-bottom: 2px solid #cbd5e1; }
+          .table td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+          .total-box { background: #fff7ed; border: 2px solid #ea580c; padding: 20px; border-radius: 8px; text-align: right; margin-top: 20px; }
+          .total-price { font-size: 28px; font-weight: 900; color: #ea580c; }
+          .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b; text-align: center; }
+          @media print {
+            body { padding: 20px; }
+            .no-print { display: none; }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="no-print" style="margin-bottom: 20px; text-align: right;">
+          <button onclick="window.print()" style="background: #ea580c; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 6px; cursor: pointer;">
+            🖨️ Imprimer / Sauvegarder en PDF
+          </button>
+        </div>
+        <div class="header">
+          <div>
+            <h1 class="logo-title">HORECA AFRICA 2026</h1>
+            <div class="subtitle">DEVIS SIMULATION & FACTURE PROFORMA EXPOSANT</div>
+            <p style="margin: 6px 0 0 0; font-size: 13px; color: #64748b;">Salon International de l'Hôtellerie & Restauration — Dakar, Sénégal</p>
+          </div>
+          <div class="ref-block">
+            <p style="margin: 0; font-weight: bold; color: #033498;">N° Proforma : ${refNum}</p>
+            <p style="margin: 4px 0 0 0;">Date : ${dateStr}</p>
+            <p style="margin: 4px 0 0 0;">Dates Salon : 27 & 28 Novembre 2026</p>
+          </div>
+        </div>
+
+        <h3>Détails du Budget d'Exposition</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Poste de Dépense</th>
+              <th>Détails / Options</th>
+              <th style="text-align: right;">Montant Estimé (${currency})</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Pack Stand & Exposition</strong></td>
+              <td>${packName} (Novotel Dakar)</td>
+              <td style="text-align: right; font-weight: bold;">${formatPrice(packCost)}</td>
+            </tr>
+            <tr>
+              <td><strong>Vols Aériens A/R</strong></td>
+              <td>${teamSize} pers (${originLabel})</td>
+              <td style="text-align: right; font-weight: bold;">${formatPrice(totalFlightCost)}</td>
+            </tr>
+            ${hotelType !== 'none' ? `
+            <tr>
+              <td><strong>Hébergement Hôtel</strong></td>
+              <td>${hotelType === 'novotel' ? 'Hôtel Novotel Dakar 4*' : 'Hôtel Partenaire 3*'} (${roomsCount} ch. x ${nightsCount} nuits)</td>
+              <td style="text-align: right; font-weight: bold;">${formatPrice(totalHotelCost)}</td>
+            </tr>` : ''}
+            ${logistiqueCost > 0 ? `
+            <tr>
+              <td><strong>Logistique & Animation Stand</strong></td>
+              <td>${highPowerElectric ? 'Électricité renforcée, ' : ''}${kakemonoPrint ? 'Impression Kakemono, ' : ''}${hostessDays > 0 ? `${hostessDays} j. hôtesse` : ''}</td>
+              <td style="text-align: right; font-weight: bold;">${formatPrice(logistiqueCost)}</td>
+            </tr>` : ''}
+            <tr>
+              <td><strong>Per Diem & Transport Local</strong></td>
+              <td>Indemnités journalières & taxis (${teamSize} pers.)</td>
+              <td style="text-align: right; font-weight: bold;">${formatPrice(totalPerDiem)}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="total-box">
+          <span style="font-size: 13px; color: #475569; font-weight: bold; text-transform: uppercase;">BUDGET GLOBAL ESTIMÉ PROFORMA</span>
+          <div class="total-price">${formatPrice(grandTotalFCFA)}</div>
+          <small style="color: #64748b; font-size: 12px;">Prix estimatif sujet aux ajustements de réservation finale.</small>
+        </div>
+
+        <div class="footer">
+          <p><strong>Comité d'Organisation HORECA AFRICA 2026</strong> | Demba Conciergerie Luxury DMC</p>
+          <p>Dakar, Sénégal — Téléphone / WhatsApp : +221 77 542 82 35 | Email : contact@horecafrica.org</p>
+        </div>
+      </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    setTimeout(() => {
+      printWindow.print();
+    }, 500);
   };
 
   return (
@@ -356,6 +463,14 @@ Pouvez-vous nous envoyer la convention officielle d'exposition ? Merci !`;
 
           {/* ACTIONS */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <button
+              onClick={handleDownloadPDF}
+              className="btn btn-outline"
+              style={{ color: 'white', borderColor: 'rgba(255,255,255,0.4)', width: '100%', justifyContent: 'center' }}
+            >
+              <i className="fas fa-file-pdf text-accent"></i> 📄 Télécharger ma Proforma (PDF)
+            </button>
+
             <a
               href={`https://wa.me/221775428235?text=${generateWhatsAppMessage()}`}
               target="_blank"
@@ -365,14 +480,6 @@ Pouvez-vous nous envoyer la convention officielle d'exposition ? Merci !`;
             >
               <i className="fab fa-whatsapp"></i> {t('btnSendWA')}
             </a>
-
-            {/* <button
-              onClick={handlePrint}
-              className="btn btn-outline"
-              style={{ color: 'white', borderColor: 'rgba(255,255,255,0.4)', width: '100%', justifyContent: 'center' }}
-            >
-              <i className="fas fa-print"></i> {t('btnPrintProforma')}
-            </button> */}
           </div>
         </div>
       </div>
