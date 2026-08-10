@@ -33,6 +33,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   const [email, setEmail] = useState(customerEmail || currentUser?.email || '');
   const [phone, setPhone] = useState(customerPhone || currentUser?.phone || '');
   const [company, setCompany] = useState(companyName || currentUser?.company || '');
+  const [password, setPassword] = useState('horeca2026');
   const [txRef, setTxRef] = useState('');
 
   const formattedAmount = amount.toLocaleString('fr-FR') + ' FCFA';
@@ -40,8 +41,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   // Submit Manual Payment (Wave / Orange Money to +221 77 542 82 35)
   const handleManualSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !txRef) {
-      showToast('Veuillez remplir votre nom, email et la référence du transfert');
+    if (!name || !email || !txRef || !password) {
+      showToast('Veuillez remplir votre nom, email, mot de passe et référence du transfert');
       return;
     }
 
@@ -55,14 +56,15 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
         packName,
         amount,
         paymentMethod: method,
-        transactionRef: txRef
+        transactionRef: txRef,
+        password
       });
 
       setSubmitted(true);
-      showToast('🎉 Demande transmise ! L\'administrateur valide votre transfert et vous recevrez la facture par email.');
+      showToast('🎉 Demande enregistrée ! Votre compte participant est créé et vos accès seront activés dès validation par l\'administrateur.');
       if (onSuccess) onSuccess();
     } catch (err: any) {
-      showToast(err.message || 'Erreur lors de la soumission du paiement manuel');
+      showToast(err.message || 'Erreur lors de la soumission du paiement');
     } finally {
       setLoading(false);
     }
@@ -76,7 +78,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
     }}>
       <div className="modal-card" onClick={e => e.stopPropagation()} style={{
         backgroundColor: 'var(--bg-card)', borderRadius: 'var(--radius-lg)',
-        width: '100%', maxWidth: '540px', padding: '28px', color: 'var(--text-main)',
+        width: '100%', maxWidth: '560px', padding: '28px', color: 'var(--text-main)',
         boxShadow: 'var(--shadow-xl)', border: '1px solid var(--border-color)', position: 'relative'
       }}>
         {/* Close Button */}
@@ -90,7 +92,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
         {/* Modal Header */}
         <div style={{ textAlign: 'center', marginBottom: '20px' }}>
           <span className="badge badge-accent" style={{ marginBottom: '8px', display: 'inline-block' }}>
-            💳 Règlement &amp; Réservation HORECA AFRICA 2026
+            💳 Règlement &amp; Création Compte Participant HORECA
           </span>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--primary)', margin: '4px 0' }}>
             {packName}
@@ -104,11 +106,11 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
           <div style={{ textAlign: 'center', padding: '20px 0' }}>
             <div style={{ fontSize: '3.5rem', marginBottom: '12px' }}>🎉</div>
             <h3 style={{ color: '#22c55e', fontSize: '1.3rem', fontWeight: 800, marginBottom: '8px' }}>
-              Demande enregistrée avec succès !
+              Compte Participant Créé &amp; Demande Transmise !
             </h3>
             <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '20px' }}>
-              Votre référence de transaction <strong>{txRef}</strong> a été transmise au SuperAdmin.<br />
-              Dès confirmation du dépôt au <strong>+221 77 542 82 35</strong>, votre <strong>facture acquittée</strong> sera envoyée par email à <strong>{email}</strong>.
+              Votre compte participant <strong>{email}</strong> a été enregistré.<br />
+              Dès confirmation de votre dépôt au <strong>+221 77 542 82 35</strong> par le SuperAdmin, vos accès B2B et votre badge QR seront activés et notifiés par email.
             </p>
             <button className="btn btn-accent" onClick={onClose} style={{ width: '100%' }}>
               Fermer et Retourner au Site
@@ -158,13 +160,13 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                 <li style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fba919', margin: '4px 0' }}>
                   📞 +221 77 542 82 35
                 </li>
-                <li>Saisissez ci-dessous le numéro de référence du transfert ou votre numéro expéditeur.</li>
+                <li>Saisissez vos identifiants ci-dessous pour créer votre Compte Participant.</li>
               </ol>
             </div>
 
             <div>
               <label style={{ fontSize: '0.85rem', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
-                Nom &amp; Prénom du Payeur / Représentant *
+                Nom &amp; Prénom du Participant / Représentant *
               </label>
               <input
                 type="text"
@@ -179,7 +181,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
             <div className="grid-2" style={{ gap: '12px' }}>
               <div>
                 <label style={{ fontSize: '0.85rem', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
-                  Email Pro (pour recevoir la Facture) *
+                  Email Pro (votre Identifiant de Connexion) *
                 </label>
                 <input
                   type="email"
@@ -204,19 +206,34 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
               </div>
             </div>
 
-            <div>
-              <label style={{ fontSize: '0.85rem', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
-                Référence / Transaction {method === 'MANUAL_OM' ? 'Orange Money' : 'Wave'} *
-              </label>
-              <input
-                type="text"
-                className="input"
-                required
-                value={txRef}
-                onChange={e => setTxRef(e.target.value)}
-                placeholder="ex: TXN-99841029 ou Numéro de l'expéditeur"
-                style={{ borderColor: 'var(--accent)', fontWeight: 700 }}
-              />
+            <div className="grid-2" style={{ gap: '12px' }}>
+              <div>
+                <label style={{ fontSize: '0.85rem', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
+                  Mot de passe Secret (pour vous connecter) *
+                </label>
+                <input
+                  type="password"
+                  className="input"
+                  required
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="Choisissez un mot de passe"
+                />
+              </div>
+              <div>
+                <label style={{ fontSize: '0.85rem', fontWeight: 700, display: 'block', marginBottom: '4px' }}>
+                  Référence / Transaction {method === 'MANUAL_OM' ? 'Orange Money' : 'Wave'} *
+                </label>
+                <input
+                  type="text"
+                  className="input"
+                  required
+                  value={txRef}
+                  onChange={e => setTxRef(e.target.value)}
+                  placeholder="ex: TXN-99841029"
+                  style={{ borderColor: 'var(--accent)', fontWeight: 700 }}
+                />
+              </div>
             </div>
 
             <button
@@ -225,7 +242,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
               className="btn btn-accent"
               style={{ width: '100%', marginTop: '6px', padding: '14px', fontSize: '1rem', fontWeight: 800 }}
             >
-              {loading ? 'Soumission en cours...' : ' Demander la Validation SuperAdmin & Ma Facture'}
+              {loading ? 'Création du compte & Enregistrement...' : ' Créer Mon Compte & Demander la Validation'}
             </button>
           </form>
         )}

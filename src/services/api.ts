@@ -205,7 +205,7 @@ export const apiService = {
     return data;
   },
 
-  async submitManualPayment(payload: { customerName: string; customerEmail: string; customerPhone?: string; companyName?: string; packName: string; amount: number; paymentMethod: 'MANUAL_WAVE' | 'MANUAL_OM'; transactionRef: string }): Promise<{ message: string; reference: string }> {
+  async submitManualPayment(payload: { customerName: string; customerEmail: string; customerPhone?: string; companyName?: string; packName: string; amount: number; paymentMethod: 'MANUAL_WAVE' | 'MANUAL_OM'; transactionRef: string; password?: string }): Promise<{ message: string; reference: string }> {
     const res = await fetch(`${API_BASE_URL}/payment/manual/submit`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

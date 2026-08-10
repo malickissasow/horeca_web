@@ -25,6 +25,11 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(() => {
     try {
+      const search = window.location.search;
+      if (search.includes('login=1') || search.includes('email=')) {
+        localStorage.removeItem('horeca_auth_user');
+        return null;
+      }
       const saved = localStorage.getItem('horeca_auth_user');
       return saved ? JSON.parse(saved) : null;
     } catch (e) {

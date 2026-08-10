@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from './context/AuthContext';
 import {
   TopBar,
@@ -20,12 +20,18 @@ import { AdminPage } from './pages/AdminPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { HostedBuyersPage } from './pages/HostedBuyersPage';
 
-
 export const App: React.FC = () => {
   const { currentPage, toastMessage, currentUser } = useAuth();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [passModalOpen, setPassModalOpen] = useState(false);
+
+  useEffect(() => {
+    const search = window.location.search;
+    if (search.includes('login=1') || search.includes('email=')) {
+      setLoginModalOpen(true);
+    }
+  }, []);
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>

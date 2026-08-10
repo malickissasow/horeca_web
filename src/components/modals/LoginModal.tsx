@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 
 interface LoginModalProps {
@@ -11,6 +11,16 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      const params = new URLSearchParams(window.location.search);
+      const emailParam = params.get('email');
+      if (emailParam) {
+        setEmail(emailParam);
+      }
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -37,7 +47,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
       <div className="modal-container">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <h3 style={{ fontWeight: 800, color: 'var(--primary)', fontSize: '1.4rem' }}>
-            <i className="fas fa-lock text-accent"></i> Connexion Espace Pro
+            <i className="fas fa-lock text-accent"></i> Connexion Espace Participant
           </h3>
           <button onClick={onClose}><i className="fas fa-times"></i></button>
         </div>
@@ -45,7 +55,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
         {/* QUICK TEST ACCOUNTS AUTO-FILL */}
         <div style={{ background: 'var(--gray-100)', padding: '12px', borderRadius: 'var(--radius-md)', marginBottom: '16px', border: '1px dashed var(--accent)' }}>
           <div style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            ⚡ <span>Comptes de Test (Cliquer pour pré-remplir) :</span>
+            ⚡ <span>Démo rapide (Cliquer pour pré-remplir) :</span>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '6px' }}>
             <button
@@ -101,14 +111,14 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
               type="password"
               className="form-control"
               required
-              placeholder="Mot de passe"
+              placeholder="Saisissez votre mot de passe"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
           <button type="submit" className="btn btn-accent" style={{ width: '100%' }} disabled={loading}>
-            <i className="fas fa-sign-in-alt"></i> {loading ? 'Connexion en cours...' : 'Connexion'}
+            <i className="fas fa-sign-in-alt"></i> {loading ? 'Connexion en cours...' : 'Se Connecter'}
           </button>
 
           <div style={{ textAlign: 'center', marginTop: '16px', paddingTop: '14px', borderTop: '1px solid var(--gray-200)' }}>
@@ -122,7 +132,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                 setCurrentPage('register');
               }}
             >
-              <i className="fas fa-user-plus"></i> Créer un compte maintenant
+              <i className="fas fa-user-plus"></i> S'inscrire / Créer un compte
             </button>
           </div>
         </form>
