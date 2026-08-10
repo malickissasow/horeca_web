@@ -70,7 +70,7 @@ export const ExhibitorBudgetCalculator: React.FC = () => {
 
   const totalHotelCost = useMemo(() => hotelCostPerNight * roomsCount * nightsCount, [hotelCostPerNight, roomsCount, nightsCount]);
 
-  const visaCost = useMemo(() => (visaNeeded ? 15000 * teamSize : 0), [visaNeeded, teamSize]);
+  const visaCost = useMemo(() => (visaNeeded ? 50000 : 0), [visaNeeded]);
 
   const logistiqueCost = useMemo(() => {
     let total = 0;
@@ -192,6 +192,12 @@ Pouvez-vous nous envoyer la convention officielle d'exposition ? Merci !`;
               <td><strong>Logistique & Animation Stand</strong></td>
               <td>${highPowerElectric ? 'Électricité renforcée, ' : ''}${kakemonoPrint ? 'Impression Kakemono, ' : ''}${hostessDays > 0 ? `${hostessDays} j. hôtesse` : ''}</td>
               <td style="text-align: right; font-weight: bold;">${formatPrice(logistiqueCost)}</td>
+            </tr>` : ''}
+            ${visaCost > 0 ? `
+            <tr>
+              <td><strong>Assistance Formalités Visa</strong></td>
+              <td>Lettre d'invitation officielle fournie</td>
+              <td style="text-align: right; font-weight: bold;">${formatPrice(visaCost)}</td>
             </tr>` : ''}
             <tr>
               <td><strong>Per Diem & Transport Local</strong></td>
@@ -386,7 +392,7 @@ Pouvez-vous nous envoyer la convention officielle d'exposition ? Merci !`;
                   checked={visaNeeded}
                   onChange={(e) => setVisaNeeded(e.target.checked)}
                 />
-                <span>{t('calcVisa')}</span>
+                <span>{t('calcVisa')} — <strong>+{formatPrice(50000)}</strong></span>
               </label>
             </div>
           </div>
@@ -433,6 +439,13 @@ Pouvez-vous nous envoyer la convention officielle d'exposition ? Merci !`;
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span>Logistique &amp; Animation :</span>
                 <strong>{formatPrice(logistiqueCost)}</strong>
+              </div>
+            )}
+
+            {visaCost > 0 && (
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span>Assistance Formalités Visa :</span>
+                <strong>{formatPrice(visaCost)}</strong>
               </div>
             )}
 
