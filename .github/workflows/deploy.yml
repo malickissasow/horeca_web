@@ -43,8 +43,16 @@ jobs:
           fi
           echo "✅ Build successful! dist directory ready."
 
-      - name: 📤 FTP Deploy to Hostinger via Python Script
-        run: python3 .github/scripts/deploy_ftp.py
+      - name: 📤 FTP Deploy Web Frontend to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 92.113.24.18
+          username: u208608546.app.horecafrica.org
+          password: B5@9ll@c
+          local-dir: ./dist/
+          server-dir: public_html/
+          protocol: ftps
+          security: loose
 
       - name: Deployment Summary
         run: echo "🎉 Application deployed strictly to https://app.horecafrica.org"
