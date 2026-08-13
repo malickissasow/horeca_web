@@ -114,13 +114,7 @@ export const HomePage: React.FC = () => {
       </div>
 
       {/* STATS CARDS GRID — Identiques à horecafrica.com */}
-      <div className="grid-3" style={{ marginBottom: '36px', gap: '20px' }}>
-        <div className="card" style={{ textAlign: 'center', cursor: 'pointer', borderTop: '4px solid var(--horeca-orange)' }} onClick={() => setCurrentPage('search')}>
-          <i className="fas fa-comments text-accent" style={{ fontSize: '2.4rem', marginBottom: '12px' }}></i>
-          <h3 style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '4px' }}>+300</h3>
-          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 700 }}>Rendez-vous B2B pré-planifiés</p>
-          <span style={{ fontSize: '0.78rem', color: 'var(--text-light)' }}>sur 2 jours de salon</span>
-        </div>
+      <div className="grid-5" style={{ marginBottom: '36px', gap: '16px' }}>
         <div className="card" style={{ textAlign: 'center', cursor: 'pointer', borderTop: '4px solid var(--horeca-blue)' }} onClick={() => setCurrentPage('search')}>
           <i className="fas fa-user-tie" style={{ fontSize: '2.4rem', color: 'var(--horeca-blue)', marginBottom: '12px' }}></i>
           <h3 style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '4px' }}>160</h3>
