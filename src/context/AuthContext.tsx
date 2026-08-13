@@ -67,7 +67,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           autoConnect: true,
           reconnectionAttempts: 3,
           timeout: 5000,
-          transports: ['websocket', 'polling']
+          transports: ['polling'],
+          upgrade: false
         });
         socket.on('connect_error', () => {
           // Quietly ignore WebSocket/polling connection errors if server is HTTP only
