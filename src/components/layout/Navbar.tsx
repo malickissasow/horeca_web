@@ -75,6 +75,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenLogin, onOpenProfile, onOp
           >
             <i className="fas fa-crown text-accent"></i> {t('navHosted')}
           </a>
+          <a
+            href="#"
+            className={`nav-item ${currentPage === 'faq' ? 'active' : ''}`}
+            onClick={(e) => { e.preventDefault(); handleNavClick('faq'); }}
+          >
+            <i className="fas fa-question-circle"></i> {t('navFaq')}
+          </a>
 
           {currentUser && (
             <>

@@ -19,6 +19,7 @@ import { DayPassPage } from './pages/DayPassPage';
 import { AdminPage } from './pages/AdminPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { HostedBuyersPage } from './pages/HostedBuyersPage';
+import { FAQPage } from './pages/FAQPage';
 
 export const App: React.FC = () => {
   const { currentPage, toastMessage, currentUser } = useAuth();
@@ -50,6 +51,7 @@ export const App: React.FC = () => {
           {currentPage === 'jobs' && <JobsPage />}
           {currentPage === 'register' && <RegisterPage />}
           {currentPage === 'hosted' && <HostedBuyersPage />}
+          {currentPage === 'faq' && <FAQPage />}
 
           {/* PROTECTED PAGES */}
           {currentPage === 'meetings' && (

@@ -113,27 +113,43 @@ export const HomePage: React.FC = () => {
         </div>
       </div>
 
-      {/* STATS CARDS GRID */}
-      <div className="grid-4" style={{ marginBottom: '36px' }}>
-        <div className="card" style={{ textAlign: 'center', cursor: 'pointer' }} onClick={() => setCurrentPage('search')}>
-          <i className="fas fa-building text-accent" style={{ fontSize: '2.4rem', marginBottom: '12px' }}></i>
-          <h3 style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '4px' }}>500+</h3>
-          <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('statDecideurs')}</p>
-        </div>
-        <div className="card" style={{ textAlign: 'center', cursor: 'pointer' }} onClick={() => setCurrentPage('search')}>
+      {/* STATS CARDS GRID — Identiques à horecafrica.com */}
+      <div className="grid-3" style={{ marginBottom: '36px', gap: '20px' }}>
+        <div className="card" style={{ textAlign: 'center', cursor: 'pointer', borderTop: '4px solid var(--horeca-orange)' }} onClick={() => setCurrentPage('search')}>
           <i className="fas fa-comments text-accent" style={{ fontSize: '2.4rem', marginBottom: '12px' }}></i>
-          <h3 style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '4px' }}>1 200+</h3>
-          <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('statMeetings')}</p>
+          <h3 style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '4px' }}>+300</h3>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 700 }}>Rendez-vous B2B pré-planifiés</p>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-light)' }}>sur 2 jours de salon</span>
         </div>
-        <div className="card" style={{ textAlign: 'center', cursor: 'pointer' }} onClick={() => setCurrentPage('jobs')}>
-          <i className="fas fa-user-graduate" style={{ fontSize: '2.4rem', color: 'var(--purple)', marginBottom: '12px' }}></i>
-          <h3 style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '4px' }}>250+</h3>
-          <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('statTalents')}</p>
+        <div className="card" style={{ textAlign: 'center', cursor: 'pointer', borderTop: '4px solid var(--horeca-blue)' }} onClick={() => setCurrentPage('search')}>
+          <i className="fas fa-user-tie" style={{ fontSize: '2.4rem', color: 'var(--horeca-blue)', marginBottom: '12px' }}></i>
+          <h3 style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '4px' }}>160</h3>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 700 }}>Décideurs Qualifiés</p>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-light)' }}>Hôtels, Restos, Tourisme</span>
         </div>
-        <div className="card" style={{ textAlign: 'center', cursor: 'pointer' }} onClick={() => setCurrentPage('pricing')}>
-          <i className="fas fa-globe-africa text-accent" style={{ fontSize: '2.4rem', marginBottom: '12px' }}></i>
-          <h3 style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '4px' }}>15+</h3>
-          <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', fontWeight: 600 }}>{t('statCountries')}</p>
+        <div className="card" style={{ textAlign: 'center', cursor: 'pointer', borderTop: '4px solid var(--purple)' }} onClick={() => setCurrentPage('pricing')}>
+          <i className="fas fa-store" style={{ fontSize: '2.4rem', color: 'var(--purple)', marginBottom: '12px' }}></i>
+          <h3 style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '4px' }}>20</h3>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 700 }}>Exposants &amp; Marques</p>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-light)' }}>Équipements &amp; Tech</span>
+        </div>
+        <div className="card" style={{ textAlign: 'center', cursor: 'pointer', borderTop: '4px solid #10b981' }} onClick={() => setCurrentPage('jobs')}>
+          <i className="fas fa-user-graduate" style={{ fontSize: '2.4rem', color: '#10b981', marginBottom: '12px' }}></i>
+          <h3 style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '4px' }}>45</h3>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 700 }}>Jeunes Diplômés</p>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-light)' }}>HORECA Jobs Africa</span>
+        </div>
+        <div className="card" style={{ textAlign: 'center', cursor: 'pointer', borderTop: '4px solid #eab308' }} onClick={() => setCurrentPage('hosted')}>
+          <i className="fas fa-crown" style={{ fontSize: '2.4rem', color: '#eab308', marginBottom: '12px' }}></i>
+          <h3 style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '4px' }}>3</h3>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 700 }}>Hosted Buyers VIP</p>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-light)' }}>Prise en charge vol &amp; hôtel</span>
+        </div>
+        <div className="card" style={{ textAlign: 'center', cursor: 'pointer', borderTop: '4px solid #3b82f6' }} onClick={() => setCurrentPage('faq')}>
+          <i className="fas fa-microphone-alt" style={{ fontSize: '2.4rem', color: '#3b82f6', marginBottom: '12px' }}></i>
+          <h3 style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--primary)', marginBottom: '4px' }}>10</h3>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 700 }}>Speakers &amp; Experts</p>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-light)' }}>Conférences &amp; Paneles</span>
         </div>
       </div>
 
@@ -358,7 +374,7 @@ export const HomePage: React.FC = () => {
               Scannez le QR Code ou appuyez pour contacter directement l&apos;équipe HORECA Africa :
             </p>
             <a
-              href="https://wa.me/221775428235"
+              href="https://wa.me/221764205216"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -371,20 +387,20 @@ export const HomePage: React.FC = () => {
               }}
             >
               <img
-                src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https://wa.me/221775428235"
-                alt="WhatsApp HORECA Africa"
+                src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https://wa.me/221764205216"
+                alt="WhatsApp Assistant IA HORECA Africa"
                 width={140}
                 height={140}
               />
             </a>
             <a
-              href="https://wa.me/221775428235"
+              href="https://wa.me/221764205216"
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-accent btn-sm"
               style={{ marginTop: '16px', textDecoration: 'none' }}
             >
-              <i className="fab fa-whatsapp"></i> Chatter +221 77 542 82 35
+              <i className="fab fa-whatsapp"></i> Chatter +221 76 420 52 16
             </a>
           </div>
         </div>

@@ -30,7 +30,7 @@ export const TopBar: React.FC = () => {
               infos@horecafrica.com
             </a>
           </span>
-          <span><i className="fas fa-phone-alt"></i> +221 77 542 82 35</span>
+          <span><i className="fas fa-phone-alt"></i> <a href="https://wa.me/221764205216" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>+221 76 420 52 16</a></span>
           <span><i className="fas fa-map-marker-alt"></i> {t('venue')}</span>
         </div>
 
@@ -92,20 +92,20 @@ export const TopBar: React.FC = () => {
 
           {/* SOCIAL ICONS — comme horecafrica.com */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={socialIconStyle}
+            <a href="https://www.facebook.com/horecafrique?locale=fr_FR" target="_blank" rel="noopener noreferrer" style={socialIconStyle}
                title="Facebook HORECA Africa">
               <i className="fab fa-facebook-f"></i>
             </a>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" style={socialIconStyle}
+            <a href="https://www.youtube.com/@HorecaAfricaTv" target="_blank" rel="noopener noreferrer" style={socialIconStyle}
                title="YouTube HORECA Africa">
               <i className="fab fa-youtube"></i>
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" style={socialIconStyle}
+            <a href="https://www.linkedin.com/company/reseau-horeca/" target="_blank" rel="noopener noreferrer" style={socialIconStyle}
                title="LinkedIn HORECA Africa">
               <i className="fab fa-linkedin-in"></i>
             </a>
             <a
-              href="https://whatsapp.com/channel/0029Vb6sCqYGk1G1Kn8Hpc1Z"
+              href="https://whatsapp.com/channel/0029VaWOV0rHFxP5qPdtDS3Y"
               target="_blank" rel="noopener noreferrer"
               style={{ ...socialIconStyle, border: '1.5px solid #25D366' }}
               title="Canal WhatsApp HORECA Africa"

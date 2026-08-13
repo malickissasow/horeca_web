@@ -37,11 +37,11 @@ export const Footer: React.FC = () => {
             <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" style={socialStyle} title="YouTube">
               <i className="fab fa-youtube"></i>
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" style={socialStyle} title="LinkedIn">
+            <a href="https://www.linkedin.com/company/reseau-horeca/" target="_blank" rel="noopener noreferrer" style={socialStyle} title="LinkedIn">
               <i className="fab fa-linkedin-in"></i>
             </a>
             <a
-              href="https://wa.me/221775428235" target="_blank" rel="noopener noreferrer"
+              href="https://wa.me/221764205216" target="_blank" rel="noopener noreferrer"
               style={{ ...socialStyle, border: '1.5px solid #25D366' }} title="WhatsApp direct"
             >
               <i className="fab fa-whatsapp" style={{ color: '#25D366' }}></i>
@@ -60,6 +60,7 @@ export const Footer: React.FC = () => {
             <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('pricing'); }}>{t('navPricing')}</a></li>
             <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('search'); }}>{t('navMatchmaking')}</a></li>
             <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('jobs'); }}>{t('navJobs')}</a></li>
+            <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('faq'); }}>❓ FAQ &amp; Infos Pratiques</a></li>
             <li>
               <a href="#" onClick={(e) => { e.preventDefault(); setCurrentPage('hosted'); }}
                  style={{ color: 'var(--horeca-orange)' }}>
@@ -67,7 +68,7 @@ export const Footer: React.FC = () => {
               </a>
             </li>
             <li>
-              <a href="https://whatsapp.com/channel/0029Vb6sCqYGk1G1Kn8Hpc1Z" target="_blank" rel="noopener noreferrer"
+              <a href="https://whatsapp.com/channel/0029VaWOV0rHFxP5qPdtDS3Y" target="_blank" rel="noopener noreferrer"
                  style={{ color: '#25D366' }}>
                 📢 {t('waChannel')}
               </a>
@@ -101,12 +102,12 @@ export const Footer: React.FC = () => {
             </li>
             <li>
               <i className="fas fa-phone-alt" style={{ color: 'var(--horeca-orange)', marginRight: '8px' }}></i>
-              +221 77 542 82 35
+              +221 76 420 52 16 / +221 77 542 82 35
             </li>
             <li>
               <i className="fas fa-envelope" style={{ color: 'var(--horeca-orange)', marginRight: '8px' }}></i>
-              <a href="mailto:contact@horecafrica.com" style={{ color: 'rgba(255,255,255,0.72)' }}>
-                contact@horecafrica.com
+              <a href="mailto:infos@horecafrica.com" style={{ color: 'rgba(255,255,255,0.72)' }}>
+                infos@horecafrica.com
               </a>
             </li>
             <li>
