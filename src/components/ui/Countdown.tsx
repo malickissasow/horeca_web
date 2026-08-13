@@ -4,7 +4,7 @@ export const Countdown: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    const targetDate = new Date('November 25, 2026 09:00:00').getTime();
+    const targetDate = new Date('November 27, 2026 00:00:00 GMT').getTime();
 
     const calculateTime = () => {
       const now = new Date().getTime();
