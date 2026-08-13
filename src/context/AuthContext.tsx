@@ -60,23 +60,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.setItem('horeca_auth_user', JSON.stringify(currentUser));
       refreshPendingCount();
 
-      // Initialize Socket.io Connection
-      const socket: Socket = io(SOCKET_URL);
-      socket.emit('join_user_room', currentUser.id);
+      // Initialize Socket.io Connection with autoConnect control and error silencing
+      let socket: Socket | null = null;
+      try {
+        socket = io(SOCKET_URL, {
+          autoConnect: true,
+          reconnectionAttempts: 3,
+          timeout: 5000,
+          transports: ['websocket', 'polling']
+        });
+        socket.on('connect_error', () => {
+          // Quietly ignore WebSocket/polling connection errors if server is HTTP only
+        });
+        socket.emit('join_user_room', currentUser.id);
 
-      socket.on('meeting_created', (data: { fromCompany: string; day: string; time: string }) => {
-        showToast(`🔔 Nouveau RDV B2B de ${data.fromCompany} (${data.day} à ${data.time}) !`);
-        refreshPendingCount();
-      });
+        socket.on('meeting_created', (data: { fromCompany: string; day: string; time: string }) => {
+          showToast(`🔔 Nouveau RDV B2B de ${data.fromCompany} (${data.day} à ${data.time}) !`);
+          refreshPendingCount();
+        });
 
-      socket.on('meeting_status_changed', (data: { status: string }) => {
-        const label = data.status === 'ACCEPTED' ? 'accepté ✅' : 'décliné ❌';
-        showToast(`⚡ Statut rendez-vous mis à jour : ${label}`);
-        refreshPendingCount();
-      });
+        socket.on('meeting_status_changed', (data: { status: string }) => {
+          const label = data.status === 'ACCEPTED' ? 'accepté ✅' : 'décliné ❌';
+          showToast(`⚡ Statut rendez-vous mis à jour : ${label}`);
+          refreshPendingCount();
+        });
+      } catch (e) {
+        // Socket connection silent fallback
+      }
 
       return () => {
-        socket.disconnect();
+        if (socket) socket.disconnect();
       };
     } else {
       localStorage.removeItem('horeca_auth_user');
