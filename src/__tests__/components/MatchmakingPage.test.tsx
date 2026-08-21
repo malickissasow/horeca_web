@@ -74,17 +74,17 @@ describe('MatchmakingPage — Chargement initial', () => {
 describe('MatchmakingPage — Filtres & Recherche', () => {
   it('affiche le champ de recherche', () => {
     renderPage(null);
-    expect(screen.getByPlaceholderText(/Novotel|Manager/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Recherche entreprise/i)).toBeInTheDocument();
   });
 
   it('affiche le filtre par Rôle', () => {
     renderPage(null);
-    expect(screen.getByText('Tous les rôles')).toBeInTheDocument();
+    expect(screen.getByText(/Tous les Rôles/i)).toBeInTheDocument();
   });
 
   it('affiche le filtre par Secteur', () => {
     renderPage(null);
-    expect(screen.getByText('Tous les secteurs')).toBeInTheDocument();
+    expect(screen.getByText(/Tous les Secteurs/i)).toBeInTheDocument();
   });
 
   it('filtre les participants par rôle via select', async () => {
@@ -93,7 +93,7 @@ describe('MatchmakingPage — Filtres & Recherche', () => {
       expect(screen.queryByText(/Chargement/i)).not.toBeInTheDocument();
     });
 
-    const roleSelect = screen.getByDisplayValue('Tous les rôles') as HTMLSelectElement;
+    const roleSelect = screen.getByDisplayValue(/Tous les Rôles/i) as HTMLSelectElement;
     fireEvent.change(roleSelect, { target: { value: 'Professionnel' } });
 
     await waitFor(() => {
@@ -107,7 +107,7 @@ describe('MatchmakingPage — Filtres & Recherche', () => {
       expect(screen.queryByText(/Chargement/i)).not.toBeInTheDocument();
     });
 
-    const searchInput = screen.getByPlaceholderText(/Novotel|Manager/i) as HTMLInputElement;
+    const searchInput = screen.getByPlaceholderText(/Recherche entreprise/i) as HTMLInputElement;
     fireEvent.change(searchInput, { target: { value: 'Terrou' } });
 
     await waitFor(() => {

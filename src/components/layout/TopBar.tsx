@@ -21,17 +21,33 @@ export const TopBar: React.FC = () => {
 
   return (
     <div className="top-bar">
-      <div className="container" style={{ flexWrap: 'wrap', gap: '8px' }}>
+      <div className="container" style={{ flexWrap: 'wrap', gap: '10px' }}>
         {/* LEFT: Contact Info */}
         <div className="top-info">
           <span>
             <i className="fas fa-envelope"></i>
-            <a href="mailto:infos@horecafrica.com" style={{ color: 'white', opacity: 0.92 }}>
+            <a href="mailto:infos@horecafrica.com" style={{ color: 'white', opacity: 0.95 }}>
               infos@horecafrica.com
             </a>
           </span>
-          <span><i className="fas fa-phone-alt"></i> <a href="https://wa.me/221764205216" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>+221 76 420 52 16</a></span>
-          <span><i className="fas fa-map-marker-alt"></i> {t('venue')}</span>
+          <span>
+            <i className="fas fa-phone-alt"></i>{' '}
+            <a href="https://wa.me/221764205216" target="_blank" rel="noopener noreferrer" style={{ color: 'white', opacity: 0.95 }}>
+              +221 76 420 52 16
+            </a>
+          </span>
+          <span>
+            <i className="fas fa-map-marker-alt"></i>{' '}
+            <a
+              href="https://www.google.com/maps/place/H%C3%B4tel+Novotel+Dakar/@14.6687241,-17.4268024,17z/data=!3m1!4b1!4m9!3m8!1s0xec173b40f1ab0fb:0x5e1b6d1773491456!5m2!4m1!1i2!8m2!3d14.6687241!4d-17.4268024!16s%2Fg%2F1tf9pmlv?entry=ttu&g_ep=EgoyMDI2MDgxOS4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: 'white', textDecoration: 'underline', textUnderlineOffset: '3px', fontWeight: 600 }}
+              title="Voir l'Hôtel Novotel Dakar sur Google Maps"
+            >
+              {t('venue')}
+            </a>
+          </span>
         </div>
 
         {/* RIGHT: Language, Theme, Currency, Socials */}
@@ -40,13 +56,13 @@ export const TopBar: React.FC = () => {
           {/* MULTI-LANGUE SELECTOR */}
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: '5px',
-            background: 'rgba(255,255,255,0.12)', padding: '3px 10px', borderRadius: '15px'
+            background: 'rgba(255,255,255,0.15)', padding: '4px 12px', borderRadius: '16px'
           }}>
-            <i className="fas fa-globe" style={{ color: 'var(--horeca-orange)', fontSize: '0.78rem' }}></i>
+            <i className="fas fa-globe" style={{ color: 'var(--horeca-orange)', fontSize: '0.85rem' }}></i>
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value as Language)}
-              style={{ background: 'transparent', color: 'white', border: 'none', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer' }}
+              style={{ background: 'transparent', color: 'white', border: 'none', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer' }}
               aria-label={t('selectLanguage')}
             >
               <option value="fr" style={{ background: '#1a2d6e', color: 'white' }}>🇫🇷 French</option>
@@ -58,14 +74,14 @@ export const TopBar: React.FC = () => {
           {/* MULTI-DEVISE SELECTOR */}
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: '5px',
-            background: 'rgba(240,120,32,0.22)', border: '1px solid rgba(240,120,32,0.45)',
-            padding: '3px 10px', borderRadius: '15px'
+            background: 'rgba(240,120,32,0.25)', border: '1px solid rgba(240,120,32,0.5)',
+            padding: '4px 12px', borderRadius: '16px'
           }}>
-            <i className="fas fa-coins" style={{ color: '#ffb07a', fontSize: '0.78rem' }}></i>
+            <i className="fas fa-coins" style={{ color: '#ffb07a', fontSize: '0.85rem' }}></i>
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value as Currency)}
-              style={{ background: 'transparent', color: 'white', border: 'none', fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer' }}
+              style={{ background: 'transparent', color: 'white', border: 'none', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer' }}
               aria-label={t('selectCurrency')}
             >
               <option value="FCFA" style={{ background: '#1a2d6e', color: 'white' }}>FCFA</option>
@@ -80,9 +96,9 @@ export const TopBar: React.FC = () => {
           <button
             onClick={toggleTheme}
             style={{
-              background: 'rgba(255,255,255,0.12)', color: 'white',
-              border: '1px solid rgba(255,255,255,0.25)', fontSize: '0.75rem',
-              fontWeight: 700, padding: '3px 10px', borderRadius: '15px',
+              background: 'rgba(255,255,255,0.15)', color: 'white',
+              border: '1px solid rgba(255,255,255,0.3)', fontSize: '0.8rem',
+              fontWeight: 700, padding: '4px 12px', borderRadius: '16px',
               cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px'
             }}
             title="Changer le thème"
@@ -90,11 +106,32 @@ export const TopBar: React.FC = () => {
             {theme === 'dark' ? '🌙' : '☀️'} {theme === 'dark' ? 'Sombre' : 'Clair'}
           </button>
 
-          {/* SOCIAL ICONS — comme horecafrica.com */}
+          {/* CANAL WHATSAPP BUTTON */}
+          <a
+            href="https://whatsapp.com/channel/0029VaWOV0rHFxP5qPdtDS3Y"
+            target="_blank" rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              background: '#25D366', color: '#ffffff', border: 'none',
+              padding: '4px 12px', borderRadius: '16px', fontSize: '0.8rem',
+              fontWeight: 800, textDecoration: 'none', boxShadow: '0 2px 6px rgba(37,211,102,0.4)',
+              transition: 'transform 0.2s ease'
+            }}
+            title="Rejoindre le Canal WhatsApp HORECA Africa"
+          >
+            <i className="fab fa-whatsapp" style={{ fontSize: '0.95rem' }}></i>
+            Canal WhatsApp HORECA Africa
+          </a>
+
+          {/* SOCIAL ICONS */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <a href="https://www.facebook.com/horecafrique?locale=fr_FR" target="_blank" rel="noopener noreferrer" style={socialIconStyle}
                title="Facebook HORECA Africa">
               <i className="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/dembaconciergerie/" target="_blank" rel="noopener noreferrer" style={socialIconStyle}
+               title="Instagram Demba Conciergerie">
+              <i className="fab fa-instagram"></i>
             </a>
             <a href="https://www.youtube.com/@HorecaAfricaTv" target="_blank" rel="noopener noreferrer" style={socialIconStyle}
                title="YouTube HORECA Africa">
@@ -103,14 +140,6 @@ export const TopBar: React.FC = () => {
             <a href="https://www.linkedin.com/company/reseau-horeca/" target="_blank" rel="noopener noreferrer" style={socialIconStyle}
                title="LinkedIn HORECA Africa">
               <i className="fab fa-linkedin-in"></i>
-            </a>
-            <a
-              href="https://whatsapp.com/channel/0029VaWOV0rHFxP5qPdtDS3Y"
-              target="_blank" rel="noopener noreferrer"
-              style={{ ...socialIconStyle, border: '1.5px solid #25D366' }}
-              title="Canal WhatsApp HORECA Africa"
-            >
-              <i className="fab fa-whatsapp" style={{ color: '#25D366' }}></i>
             </a>
           </div>
         </div>

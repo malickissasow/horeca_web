@@ -26,10 +26,10 @@ describe('Integration — Matchmaking B2B', () => {
     renderPage();
 
     await waitFor(() => {
-      expect(screen.getByPlaceholderText(/Novotel|Manager/i)).toBeInTheDocument();
+      expect(screen.getByPlaceholderText(/Recherche entreprise/i)).toBeInTheDocument();
     });
 
-    const searchInput = screen.getByPlaceholderText(/Novotel|Manager/i);
+    const searchInput = screen.getByPlaceholderText(/Recherche entreprise/i);
     fireEvent.change(searchInput, { target: { value: 'Tech' } });
 
     await waitFor(() => {
@@ -41,10 +41,10 @@ describe('Integration — Matchmaking B2B', () => {
     renderPage();
 
     await waitFor(() => {
-      expect(screen.getByDisplayValue('Tous les rôles')).toBeInTheDocument();
+      expect(screen.getByDisplayValue(/Tous les Rôles/i)).toBeInTheDocument();
     });
 
-    const roleSelect = screen.getByDisplayValue('Tous les rôles');
+    const roleSelect = screen.getByDisplayValue(/Tous les Rôles/i);
     fireEvent.change(roleSelect, { target: { value: 'Exposant' } });
 
     await waitFor(() => {
@@ -56,10 +56,10 @@ describe('Integration — Matchmaking B2B', () => {
     renderPage();
 
     await waitFor(() => {
-      expect(screen.getByDisplayValue('Tous les secteurs')).toBeInTheDocument();
+      expect(screen.getByDisplayValue(/Tous les Secteurs/i)).toBeInTheDocument();
     });
 
-    const sectorSelect = screen.getByDisplayValue('Tous les secteurs');
+    const sectorSelect = screen.getByDisplayValue(/Tous les Secteurs/i);
     fireEvent.change(sectorSelect, { target: { value: 'Hôtellerie' } });
 
     await waitFor(() => {

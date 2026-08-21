@@ -179,8 +179,8 @@ export const HostedBuyersPage: React.FC = () => {
                 Contactez directement le comité d&apos;organisation par téléphone ou sur notre chaîne officielle WhatsApp :
               </p>
               <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                <a href="https://wa.me/221775428235" target="_blank" rel="noopener noreferrer" className="btn btn-accent btn-sm">
-                  <i className="fab fa-whatsapp"></i> +221 77 542 82 35
+                <a href="https://wa.me/221764205216" target="_blank" rel="noopener noreferrer" className="btn btn-accent btn-sm">
+                  <i className="fab fa-whatsapp"></i> +221 76 420 52 16
                 </a>
                 <a href="https://whatsapp.com/channel/0029Vb6sCqYGk1G1Kn8Hpc1Z" target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-sm" style={{ color: 'white', borderColor: 'rgba(255,255,255,0.4)' }}>
                   📢 Chaîne Dakar 2026

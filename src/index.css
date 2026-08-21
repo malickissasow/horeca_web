@@ -193,8 +193,8 @@ select option {
 .top-bar {
   background: var(--horeca-blue);
   color: #ffffff;
-  font-size: 0.82rem;
-  padding: 8px 0;
+  font-size: 0.92rem;
+  padding: 10px 0;
   border-bottom: 2px solid var(--horeca-orange);
 }
 
@@ -203,26 +203,27 @@ select option {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
 
 .top-info {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
 }
 
 .top-info span {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-weight: 500;
-  margin-right: 16px;
-  opacity: 0.92;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-right: 20px;
+  opacity: 0.96;
 }
 
-.top-info i { color: var(--horeca-orange); }
+.top-info i { color: var(--horeca-orange); font-size: 1rem; }
 
 /* ===================================================
    NAVBAR — Fond blanc style horecafrica.com

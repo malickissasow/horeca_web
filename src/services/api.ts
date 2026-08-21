@@ -1,7 +1,8 @@
 import { User, Meeting, AdminStats, JobOffer, JobApplication, ContactSubmission, ChatMessage } from '../types';
 
 const env = (import.meta as any).env || {};
-export const API_BASE_URL = (env.VITE_API_URL as string) || (env.MODE === 'test' ? 'http://localhost:5000/api' : 'https://api.horecafrica.org/api');
+const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+export const API_BASE_URL = (env.VITE_API_URL as string) || (isLocal || env.DEV || env.MODE === 'test' ? 'http://localhost:5000/api' : 'https://api.horecafrica.org/api');
 
 export const apiService = {
   async login(email: string, pass: string): Promise<User> {
@@ -194,14 +195,21 @@ export const apiService = {
     if (!res.ok) throw new Error('Erreur sauvegarde note privée');
   },
 
-  async createWaveCheckout(amount: number, packName: string, userEmail?: string): Promise<{ wave_launch_url: string }> {
+  async createWaveCheckout(amount: number, packName: string, userEmail?: string, userId?: number, userName?: string, userPhone?: string, companyName?: string): Promise<{ success: boolean; reference: string; wave_session_id: string; wave_launch_url?: string; qr_uri?: string; uri?: string }> {
     const res = await fetch(`${API_BASE_URL}/payment/wave/checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount, packName, userEmail })
+      body: JSON.stringify({ amount, packName, userEmail, userId, userName, userPhone, companyName })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Erreur d’initialisation du paiement Wave');
+    return data;
+  },
+
+  async verifyWaveSession(reference: string): Promise<{ success: boolean; isPaid: boolean; statut: string }> {
+    const res = await fetch(`${API_BASE_URL}/payment/wave/verify/${reference}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Erreur vérification du paiement Wave');
     return data;
   },
 

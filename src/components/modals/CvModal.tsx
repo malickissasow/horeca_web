@@ -78,7 +78,7 @@ OBJECTIF PROFESSIONNEL :
 
 COORDONNÉES DE CONTACT :
 -------------------------
-• Téléphone / WhatsApp : ${user.phone || '+221 77 542 82 35'}
+• Téléphone / WhatsApp : ${user.phone || '+221 76 420 52 16'}
 • Email Professionnel : ${user.email || 'candidat@horeca.sn'}
 
 -------------------------------------------------------------------
@@ -171,7 +171,7 @@ QUALIFICATIONS & INTÉRÊTS RH
           </p>
 
           <p style={{ fontSize: '0.92rem', color: 'var(--gray-700)' }}>
-            <strong>Contact Recruteur :</strong> 📞 {user.phone || '+221 77 542 82 35'} · ✉️ {user.email || 'candidat@horeca.sn'}
+            <strong>Contact Recruteur :</strong> 📞 {user.phone || '+221 76 420 52 16'} · ✉️ {user.email || 'candidat@horeca.sn'}
           </p>
         </div>
 

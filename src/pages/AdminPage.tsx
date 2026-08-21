@@ -316,7 +316,7 @@ export const AdminPage: React.FC = () => {
                 💳 Commandes, Paiements &amp; Validation des Factures ({orders.length})
               </h3>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                Vérifiez les transferts manuels (Wave / Orange Money au +221 77 542 82 35), validez et envoyez automatiquement la facture acquittée par email.
+                Vérifiez les transferts manuels (Wave / Orange Money au +221 76 420 52 16), validez et envoyez automatiquement la facture acquittée par email.
               </p>
             </div>
             <button className="btn btn-outline btn-sm" onClick={loadAdminData}>

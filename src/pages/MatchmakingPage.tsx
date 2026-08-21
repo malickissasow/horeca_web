@@ -46,11 +46,6 @@ export const MatchmakingPage: React.FC = () => {
 
   return (
     <div>
-      {/* SENEGAL TOURISM & TERANGA SHOWCASE BANNER */}
-      <div style={{ marginBottom: '28px' }}>
-        <SenegalTourismShowcase />
-      </div>
-
       {/* PENDING ACCOUNT ACTIVATION WARNING BANNER */}
       {currentUser && !currentUser.isSuperAdmin && currentUser.isActive === false && (
         <div style={{ background: '#fff7ed', border: '2px solid #ea580c', borderRadius: '12px', padding: '20px', marginBottom: '24px', boxShadow: '0 4px 12px rgba(234,88,12,0.1)' }}>
@@ -258,6 +253,11 @@ export const MatchmakingPage: React.FC = () => {
           })}
         </div>
       )}
+
+      {/* SENEGAL TOURISM & TERANGA SHOWCASE BANNER (APRES BUSINESS MATCHING) */}
+      <div style={{ marginTop: '36px' }}>
+        <SenegalTourismShowcase />
+      </div>
 
       {/* MODALS */}
       {bookingTarget && (

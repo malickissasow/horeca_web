@@ -31,10 +31,13 @@ export const Footer: React.FC = () => {
             {t('footerDesc')}
           </p>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={socialStyle} title="Facebook">
+            <a href="https://www.facebook.com/horecafrique?locale=fr_FR" target="_blank" rel="noopener noreferrer" style={socialStyle} title="Facebook">
               <i className="fab fa-facebook-f"></i>
             </a>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" style={socialStyle} title="YouTube">
+            <a href="https://www.instagram.com/dembaconciergerie/" target="_blank" rel="noopener noreferrer" style={socialStyle} title="Instagram Demba Conciergerie">
+              <i className="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/@HorecaAfricaTv" target="_blank" rel="noopener noreferrer" style={socialStyle} title="YouTube">
               <i className="fab fa-youtube"></i>
             </a>
             <a href="https://www.linkedin.com/company/reseau-horeca/" target="_blank" rel="noopener noreferrer" style={socialStyle} title="LinkedIn">
@@ -70,7 +73,7 @@ export const Footer: React.FC = () => {
             <li>
               <a href="https://whatsapp.com/channel/0029VaWOV0rHFxP5qPdtDS3Y" target="_blank" rel="noopener noreferrer"
                  style={{ color: '#25D366' }}>
-                📢 {t('waChannel')}
+                📢 Canal WhatsApp HORECA Africa
               </a>
             </li>
           </ul>
@@ -94,7 +97,14 @@ export const Footer: React.FC = () => {
           <ul>
             <li>
               <i className="fas fa-map-marker-alt" style={{ color: 'var(--horeca-orange)', marginRight: '8px' }}></i>
-              Hôtel Novotel Dakar, Sénégal
+              <a
+                href="https://www.google.com/maps/place/H%C3%B4tel+Novotel+Dakar/@14.6687241,-17.4268024,17z/data=!3m1!4b1!4m9!3m8!1s0xec173b40f1ab0fb:0x5e1b6d1773491456!5m2!4m1!1i2!8m2!3d14.6687241!4d-17.4268024!16s%2Fg%2F1tf9pmlv?entry=ttu&g_ep=EgoyMDI2MDgxOS4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'underline' }}
+              >
+                Hôtel Novotel Dakar, Sénégal
+              </a>
             </li>
             <li>
               <i className="fas fa-calendar-alt" style={{ color: 'var(--horeca-orange)', marginRight: '8px' }}></i>
@@ -102,7 +112,9 @@ export const Footer: React.FC = () => {
             </li>
             <li>
               <i className="fas fa-phone-alt" style={{ color: 'var(--horeca-orange)', marginRight: '8px' }}></i>
-              +221 76 420 52 16 / +221 77 542 82 35
+              <a href="https://wa.me/221764205216" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.9)' }}>
+                +221 76 420 52 16
+              </a>
             </li>
             <li>
               <i className="fas fa-envelope" style={{ color: 'var(--horeca-orange)', marginRight: '8px' }}></i>

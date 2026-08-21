@@ -26,14 +26,14 @@ const renderHomePage = (preloadUser?: typeof mockUser | null) => {
 };
 
 describe('HomePage — Hero section', () => {
-  it('affiche "HORECA Africa" dans le titre', () => {
+  it('affiche "HORECA en Afrique" dans le titre', () => {
     renderHomePage(null);
-    expect(screen.getAllByText(/HORECA Africa/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/HORECA en Afrique/i).length).toBeGreaterThan(0);
   });
 
-  it('affiche "Business Week 2026"', () => {
+  it('affiche "Semaine des affaires"', () => {
     renderHomePage(null);
-    expect(screen.getAllByText(/Business Week 2026/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Semaine des affaires/i).length).toBeGreaterThan(0);
   });
 
   it('affiche le sous-titre descriptif', () => {
@@ -43,30 +43,30 @@ describe('HomePage — Hero section', () => {
 
   it('affiche les boutons d\'action héros', () => {
     renderHomePage(null);
-    expect(screen.getAllByText(/Matchmaking/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/Tarifs/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/S'inscrire/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Exposer/i).length).toBeGreaterThan(0);
   });
 });
 
 describe('HomePage — Statistiques', () => {
-  it('affiche la stat "500+"', () => {
+  it('affiche la stat "160"', () => {
     renderHomePage(null);
-    expect(screen.getByText('500+')).toBeInTheDocument();
+    expect(screen.getByText('160')).toBeInTheDocument();
   });
 
-  it('affiche la stat "1 200+"', () => {
+  it('affiche la stat "20"', () => {
     renderHomePage(null);
-    expect(screen.getByText('1 200+')).toBeInTheDocument();
+    expect(screen.getByText('20')).toBeInTheDocument();
   });
 
-  it('affiche la stat "250+"', () => {
+  it('affiche la stat "45"', () => {
     renderHomePage(null);
-    expect(screen.getByText('250+')).toBeInTheDocument();
+    expect(screen.getByText('45')).toBeInTheDocument();
   });
 
-  it('affiche la stat "15+"', () => {
+  it('affiche la stat "3"', () => {
     renderHomePage(null);
-    expect(screen.getByText('15+')).toBeInTheDocument();
+    expect(screen.getAllByText('3').length).toBeGreaterThan(0);
   });
 });
 
@@ -172,7 +172,7 @@ describe('HomePage — Formulaire de contact', () => {
 describe('HomePage — WhatsApp Section', () => {
   it('affiche le lien WhatsApp', () => {
     renderHomePage(null);
-    expect(screen.getByText(/\+221 77 542 82 35/i)).toBeInTheDocument();
+    expect(screen.getByText(/\+221 76 420 52 16/i)).toBeInTheDocument();
   });
 
   it('affiche "Infoline Officielle WhatsApp"', () => {

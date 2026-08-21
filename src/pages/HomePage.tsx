@@ -50,64 +50,66 @@ export const HomePage: React.FC = () => {
             <span
               className="badge"
               style={{
-                background: 'rgba(243, 103, 29, 0.3)',
+                background: 'rgba(243, 103, 29, 0.35)',
                 color: '#ffffff',
-                border: '1.5px solid rgba(243, 103, 29, 0.6)',
+                border: '1.5px solid rgba(243, 103, 29, 0.7)',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '6px',
-                padding: '6px 14px',
-                fontSize: '0.82rem'
+                padding: '6px 16px',
+                fontSize: '0.9rem',
+                fontWeight: 800
               }}
             >
-              {t('heroBadgeVenue')}
+              📍 27 — 28 novembre 2026 ·{' '}
+              <a
+                href="https://www.google.com/maps/place/H%C3%B4tel+Novotel+Dakar/@14.6687241,-17.4268024,17z/data=!3m1!4b1!4m9!3m8!1s0xec173b40f1ab0fb:0x5e1b6d1773491456!5m2!4m1!1i2!8m2!3d14.6687241!4d-17.4268024!16s%2Fg%2F1tf9pmlv?entry=ttu&g_ep=EgoyMDI2MDgxOS4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'white', textDecoration: 'underline' }}
+              >
+                Novotel Dakar, Sénégal
+              </a>
             </span>
             <span
               className="badge"
               style={{
-                background: 'rgba(255, 255, 255, 0.15)',
+                background: 'rgba(255, 255, 255, 0.2)',
                 color: '#ffffff',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
+                border: '1px solid rgba(255, 255, 255, 0.4)',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '6px',
                 padding: '6px 14px',
-                fontSize: '0.82rem'
+                fontSize: '0.85rem'
               }}
             >
-              {t('heroBadgeType')}
+              🏆 Plateforme de Génération d'Affaires B2B
             </span>
           </div>
 
           <h1 className="hero-title">
-            HORECA Africa<span>Business Week 2026</span>
+            Semaine des affaires <span>HORECA en Afrique 2026</span>
           </h1>
           <p className="hero-subtitle">
-            {t('heroSubtitle')}
+            Le rendez-vous B2B des professionnels du tourisme, de l'hôtellerie, de la restauration, des voyages et de l'événementiel en Afrique. Une plateforme de génération d'affaires — pas un simple salon.
           </p>
 
           <Countdown />
 
           <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginTop: '24px' }}>
-            <button className="btn btn-accent" onClick={() => setCurrentPage('search')}>
-              <i className="fas fa-handshake"></i> {t('btnExplorerMatchmaking')}
+            <button className="btn btn-accent" style={{ padding: '12px 24px', fontSize: '1rem', fontWeight: 800 }} onClick={() => setCurrentPage('register')}>
+              <i className="fas fa-user-plus"></i> S'inscrire
             </button>
-            <button className="btn btn-purple" onClick={() => setCurrentPage('jobs')}>
-              <i className="fas fa-user-graduate"></i> {t('btnJobDating')}
-            </button>
-            <button
-              className="btn btn-outline"
-              style={{ color: 'white', borderColor: 'rgba(255,255,255,0.6)', background: 'rgba(255,255,255,0.1)' }}
-              onClick={() => setCurrentPage('pricing')}
-            >
-              <i className="fas fa-tags"></i> {t('btnTarifs')}
+            <button className="btn btn-purple" style={{ padding: '12px 24px', fontSize: '1rem', fontWeight: 800 }} onClick={() => setCurrentPage('pricing')}>
+              <i className="fas fa-store"></i> Exposer
             </button>
             <button
               className="btn btn-outline"
-              style={{ color: 'white', borderColor: 'var(--accent)', background: 'rgba(243,103,29,0.25)' }}
+              style={{ color: 'white', borderColor: 'rgba(255,255,255,0.7)', background: 'rgba(255,255,255,0.15)', padding: '12px 24px', fontSize: '1rem', fontWeight: 800 }}
               onClick={() => setCurrentPage('pricing')}
             >
-              <i className="fas fa-calculator text-accent"></i> {t('btnSimulateur')}
+              <i className="fas fa-handshake text-accent"></i> Devenir partenaire
             </button>
           </div>
         </div>
