@@ -40,8 +40,8 @@ export const PricingPage: React.FC = () => {
             <span className="badge badge-role" style={{ marginBottom: '8px', display: 'inline-block' }}>Stand Découverte</span>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary)' }}>Stand 6 m²</h3>
             <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Stand équipé &amp; 2 Badges</p>
-            <div className="price-amount">{formatPrice(200000)}</div>
-            <div className="price-sub">≈ 305 € TTC · 27 &amp; 28 Nov</div>
+            <div className="price-amount">{formatPrice(1)}</div>
+            <div className="price-sub">🧪 Mode Test Wave · 1 FCFA</div>
 
             <ul className="pricing-features">
               <li><i className="fas fa-check-circle"></i> Stand équipé (cloisons, enseigne)</li>
@@ -55,9 +55,9 @@ export const PricingPage: React.FC = () => {
           <button
             className="btn btn-outline"
             style={{ width: '100%' }}
-            onClick={() => handlePayWave('Stand Découverte 6m²', 200000)}
+            onClick={() => handlePayWave('Stand Découverte 6m²', 1)}
           >
-            💳 Choisir / Payer {formatPrice(200000)}
+            💳 Test Payer {formatPrice(1)}
           </button>
         </div>
 
@@ -67,8 +67,8 @@ export const PricingPage: React.FC = () => {
             <span className="badge badge-sector" style={{ marginBottom: '8px', display: 'inline-block' }}>Stand Business</span>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary)' }}>Stand 9 m²</h3>
             <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Stand équipé &amp; Communication</p>
-            <div className="price-amount">{formatPrice(350000)}</div>
-            <div className="price-sub">≈ 534 € TTC · 27 &amp; 28 Nov</div>
+            <div className="price-amount">{formatPrice(2)}</div>
+            <div className="price-sub">🧪 Mode Test Wave · 2 FCFA</div>
 
             <ul className="pricing-features">
               <li><i className="fas fa-check-circle"></i> Stand équipé (cloisons, enseigne)</li>
@@ -82,9 +82,9 @@ export const PricingPage: React.FC = () => {
           <button
             className="btn btn-accent"
             style={{ width: '100%' }}
-            onClick={() => handlePayWave('Stand Business 9m²', 350000)}
+            onClick={() => handlePayWave('Stand Business 9m²', 2)}
           >
-            💳 Choisir / Payer {formatPrice(350000)}
+            💳 Test Payer {formatPrice(2)}
           </button>
         </div>
 
@@ -95,8 +95,8 @@ export const PricingPage: React.FC = () => {
             <span className="badge badge-sector" style={{ marginBottom: '8px', display: 'inline-block' }}>Stand Premium</span>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary)' }}>Stand 12 m²</h3>
             <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Emplacement privilégié &amp; Écran TV</p>
-            <div className="price-amount">{formatPrice(450000)}</div>
-            <div className="price-sub">≈ 686 € TTC · 27 &amp; 28 Nov</div>
+            <div className="price-amount">{formatPrice(3)}</div>
+            <div className="price-sub">🧪 Mode Test Wave · 3 FCFA</div>
 
             <ul className="pricing-features">
               <li><i className="fas fa-check-circle"></i> Emplacement privilégié sur le salon</li>
@@ -110,9 +110,9 @@ export const PricingPage: React.FC = () => {
           <button
             className="btn btn-accent"
             style={{ width: '100%' }}
-            onClick={() => handlePayWave('Stand Premium 12m²', 450000)}
+            onClick={() => handlePayWave('Stand Premium 12m²', 3)}
           >
-            💳 Choisir / Payer {formatPrice(450000)}
+            💳 Test Payer {formatPrice(3)}
           </button>
         </div>
 
@@ -122,8 +122,8 @@ export const PricingPage: React.FC = () => {
             <span className="badge badge-student" style={{ marginBottom: '8px', display: 'inline-block' }}>Stand Prestige</span>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--purple)' }}>Stand 18 m²</h3>
             <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Visibilité Maximale &amp; Sur-mesure</p>
-            <div className="price-amount" style={{ color: 'var(--purple)' }}>{formatPrice(600000)}</div>
-            <div className="price-sub">≈ 915 € TTC · 27 &amp; 28 Nov</div>
+            <div className="price-amount" style={{ color: 'var(--purple)' }}>{formatPrice(4)}</div>
+            <div className="price-sub">🧪 Mode Test Wave · 4 FCFA</div>
 
             <ul className="pricing-features">
               <li><i className="fas fa-check-circle"></i> Emplacement Premium d&apos;entrée</li>
@@ -137,9 +137,9 @@ export const PricingPage: React.FC = () => {
           <button
             className="btn btn-purple"
             style={{ width: '100%' }}
-            onClick={() => handlePayWave('Stand Prestige 18m²', 600000)}
+            onClick={() => handlePayWave('Stand Prestige 18m²', 4)}
           >
-            💳 Choisir / Payer {formatPrice(600000)}
+            💳 Test Payer {formatPrice(4)}
           </button>
         </div>
       </div>
