@@ -79,7 +79,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
     } catch (err: any) {
       const msg = err.message || '';
       if (msg.includes('allowlist') || msg.includes('ip-not-allowed')) {
-        showToast('⚠️ Votre adresse IP local (41.83.238.250) doit être ajoutée dans la liste autorisée (IP Allowlist) de votre Dashboard Wave Merchant.');
+        const extractedIp = msg.match(/\d+\.\d+\.\d+\.\d+/)?.[0] || '92.113.24.18';
+        showToast(`⚠️ L'adresse IP du serveur (${extractedIp}) doit être ajoutée dans la liste autorisée (IP Allowlist) du Dashboard Wave Merchant.`);
       } else {
         showToast(msg || 'Erreur d’initialisation Wave API');
       }
