@@ -50,7 +50,7 @@ jobs:
           username: u208608546.app.horecafrica.org
           password: B5@9ll@c
           local-dir: ./dist/
-          server-dir: public_html/
+          server-dir: ./
           protocol: ftps
           security: loose
 

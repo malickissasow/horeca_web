@@ -9,7 +9,7 @@ FTP_PORT = int(os.getenv("FTP_PORT", "21"))
 FTP_USER = os.getenv("FTP_USER", "u208608546.app.horecafrica.org")
 FTP_PASS = os.getenv("FTP_PASS", "B5@9ll@c")
 LOCAL_DIR = os.getenv("LOCAL_DIR", "dist")
-REMOTE_DIR = os.getenv("REMOTE_DIR", "public_html")
+REMOTE_DIR = os.getenv("REMOTE_DIR", "/")
 
 def connect_ftp():
     print(f"🚀 Connecting to Hostinger FTP {FTP_HOST}:{FTP_PORT} via FTPS (Explicit TLS)...")
