@@ -50,9 +50,10 @@ jobs:
           username: u208608546.app.horecafrica.org
           password: B5@9ll@c
           local-dir: ./dist/
-          server-dir: ./
+          server-dir: public_html/
           protocol: ftps
           security: loose
+          dangerous-clean-slate: true
 
       - name: Deployment Summary
         run: echo "🎉 Application deployed strictly to https://app.horecafrica.org"
