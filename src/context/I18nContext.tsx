@@ -309,12 +309,11 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return (localStorage.getItem('horeca_currency') as Currency) || 'FCFA';
   });
 
-  const [theme, setThemeState] = useState<ThemeMode>(() => {
-    return (localStorage.getItem('horeca_theme') as ThemeMode) || 'dark';
-  });
+  const [theme, setThemeState] = useState<ThemeMode>('light');
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('data-theme', 'light');
+    localStorage.setItem('horeca_theme', 'light');
   }, [theme]);
 
   const setLanguage = (lang: Language) => {

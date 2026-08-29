@@ -183,9 +183,9 @@ describe('I18nContext — changement de devise', () => {
 // THEME
 // ============================================================
 describe('I18nContext — thème', () => {
-  it('thème initial est "light" ou "dark" (string)', () => {
+  it('thème initial est "light"', () => {
     const { result } = renderHook(() => useI18n(), { wrapper });
-    expect(['light', 'dark']).toContain(result.current.theme);
+    expect(result.current.theme).toBe('light');
   });
 
   it('toggleTheme change le thème', () => {

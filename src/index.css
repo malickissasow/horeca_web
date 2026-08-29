@@ -83,30 +83,30 @@
   --transition: all 0.22s ease-in-out;
 }
 
-/* Dark mode minimal (garde compatibilité bouton toggle) */
-:root[data-theme="dark"] {
-  --bg-body:   #0b132b;
-  --bg-card:   #111c38;
-  --bg-navbar: #111c38;
-  --border:    #1e3260;
-  --gray-50:   #172445;
-  --gray-100:  #1a2847;
-  --gray-200:  #253963;
-  --gray-300:  #3b5284;
-  --text-dark: #f1f5f9;
-  --text-body: #cbd5e1;
-  --text-muted:#94a3b8;
+/* Mode Lumineux unique (Light Mode) pour une lisibilité maximale sur tous les écrans */
+:root, :root[data-theme="dark"], :root[data-theme="light"] {
+  --bg-body:   #f4f6fa;
+  --bg-card:   #ffffff;
+  --bg-navbar: #ffffff;
+  --border:    #e2e8f0;
+  --gray-50:   #f8fafc;
+  --gray-100:  #f1f5f9;
+  --gray-200:  #e2e8f0;
+  --gray-300:  #cbd5e1;
+  --text-dark: #1e293b;
+  --text-body: #374151;
+  --text-muted:#6b7280;
 
-  --bg-highlight-purple: rgba(124, 58, 237, 0.2);
-  --bg-highlight-orange: rgba(240, 120, 32, 0.2);
-  --bg-highlight-green:  rgba(16, 185, 129, 0.2);
-  --bg-highlight-red:    rgba(239, 68, 68, 0.2);
-  --bg-highlight-gray:   #1a2847;
-  --text-on-light:       #f1f5f9;
+  --bg-highlight-purple: #f5f3ff;
+  --bg-highlight-orange: #fff7ed;
+  --bg-highlight-green:  #f0fdf4;
+  --bg-highlight-red:    #fef2f2;
+  --bg-highlight-gray:   #f8fafc;
+  --text-on-light:       #1e293b;
 
-  --shadow-sm: 0 2px 10px rgba(0,0,0,0.25);
-  --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
-  --shadow-lg: 0 16px 40px rgba(0,0,0,0.55);
+  --shadow-sm: 0 2px 8px  rgba(26,45,110,0.08);
+  --shadow-md: 0 6px 20px rgba(26,45,110,0.12);
+  --shadow-lg: 0 12px 36px rgba(26,45,110,0.18);
 }
 
 /* ===== RESET & BASE ===== */

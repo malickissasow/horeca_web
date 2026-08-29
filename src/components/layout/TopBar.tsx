@@ -92,20 +92,6 @@ export const TopBar: React.FC = () => {
             </select>
           </div>
 
-          {/* THEME TOGGLE */}
-          <button
-            onClick={toggleTheme}
-            style={{
-              background: 'rgba(255,255,255,0.15)', color: 'white',
-              border: '1px solid rgba(255,255,255,0.3)', fontSize: '0.8rem',
-              fontWeight: 700, padding: '4px 12px', borderRadius: '16px',
-              cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px'
-            }}
-            title="Changer le thème"
-          >
-            {theme === 'dark' ? '🌙' : '☀️'} {theme === 'dark' ? 'Sombre' : 'Clair'}
-          </button>
-
           {/* CANAL WHATSAPP BUTTON */}
           <a
             href="https://whatsapp.com/channel/0029VaWOV0rHFxP5qPdtDS3Y"
