@@ -18,9 +18,11 @@ export const RegisterPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [role, setRole] = useState<UserRole>('Professionnel');
+  const [customRole, setCustomRole] = useState('');
   const [name, setName] = useState('');
   const [company, setCompany] = useState('');
   const [sector, setSector] = useState<UserSector>('Hôtellerie');
+  const [customSector, setCustomSector] = useState('');
   const [phone, setPhone] = useState('');
   const [studentJob, setStudentJob] = useState('');
   const [cvFile, setCvFile] = useState<File | null>(null);
@@ -41,12 +43,16 @@ export const RegisterPage: React.FC = () => {
     showToast(`Rôle sélectionné : ${r}`);
     if (r === 'Exposant') {
       setSelectedPass('Pack Stand & Recrutement');
+      setCurrentStep(3);
     } else if (r === 'Étudiant') {
       setSelectedPass('Pass Job Dating RH');
+      setCurrentStep(3);
+    } else if (r === 'Autre') {
+      setSelectedPass('Pass Visiteur Pro');
     } else {
       setSelectedPass('Pass B2B Matchmaker');
+      setCurrentStep(3);
     }
-    setCurrentStep(3);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,13 +72,16 @@ export const RegisterPage: React.FC = () => {
   };
 
   const registerUserInternal = async () => {
+    const finalRole = (role === 'Autre' && customRole.trim()) ? customRole.trim() : role;
+    const finalSector = (sector === 'Autre' && customSector.trim()) ? customSector.trim() : sector;
+
     const user = await apiService.register({
       email,
       pass,
       name,
       company: company || name,
-      role,
-      sector,
+      role: finalRole as UserRole,
+      sector: finalSector as UserSector,
       phone,
       studentJob,
       cvAttached: role === 'Étudiant' || !!cvFile,
@@ -216,7 +225,7 @@ export const RegisterPage: React.FC = () => {
             <h3 style={{ color: 'var(--primary)', fontWeight: 800, marginBottom: '20px' }}>
               Étape 2 : Quel est votre rôle à HORECA AFRICA 2026 ?
             </h3>
-            <div className="role-cards-grid">
+            <div className="role-cards-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '14px' }}>
               <div
                 className={`role-select-card ${role === 'Professionnel' ? 'selected' : ''}`}
                 onClick={() => handleSelectRole('Professionnel')}
@@ -243,9 +252,43 @@ export const RegisterPage: React.FC = () => {
                 <h4 style={{ fontWeight: 800 }}>Étudiant / Candidat RH</h4>
                 <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Job Dating & Dépot CV</p>
               </div>
+
+              <div
+                className={`role-select-card ${role === 'Autre' ? 'selected' : ''}`}
+                onClick={() => handleSelectRole('Autre')}
+              >
+                <i className="fas fa-pen-fancy text-accent" style={{ fontSize: '2rem', marginBottom: '10px' }}></i>
+                <h4 style={{ fontWeight: 800 }}>Autre / Sur-mesure</h4>
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Renseignez votre type d'activité</p>
+              </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '10px' }}>
+            {role === 'Autre' && (
+              <div style={{ marginTop: '20px', background: 'rgba(240, 120, 32, 0.08)', border: '1.5px solid var(--accent)', padding: '18px', borderRadius: 'var(--radius-md)' }}>
+                <label className="form-label" style={{ fontWeight: 800, color: 'var(--primary)', marginBottom: '8px', display: 'block' }}>
+                  <i className="fas fa-edit text-accent"></i> Précisez votre rôle / type d'activité personnalisé *
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  required
+                  placeholder="ex: Consultant HORECA, Investisseur, Médias & Presse, Distributeur..."
+                  value={customRole}
+                  onChange={(e) => setCustomRole(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className="btn btn-accent"
+                  style={{ marginTop: '14px', width: '100%', padding: '10px 20px', fontWeight: 800 }}
+                  disabled={!customRole.trim()}
+                  onClick={() => setCurrentStep(3)}
+                >
+                  Continuer vers Profil & Secteur <i className="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            )}
+
+            <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
               <button className="btn btn-outline" style={{ flex: 1 }} onClick={() => setCurrentStep(1)}>
                 <i className="fas fa-arrow-left"></i> Retour
               </button>
@@ -301,7 +344,19 @@ export const RegisterPage: React.FC = () => {
                   <option value="Agences de voyages">Agences de voyages</option>
                   <option value="Équipementiers">Équipementiers</option>
                   <option value="Banques">Banques</option>
+                  <option value="Autre">Autre (Secteur sur-mesure)</option>
                 </select>
+                {sector === 'Autre' && (
+                  <input
+                    type="text"
+                    className="form-control"
+                    style={{ marginTop: '8px' }}
+                    required
+                    placeholder="Précisez votre secteur d'activité..."
+                    value={customSector}
+                    onChange={(e) => setCustomSector(e.target.value)}
+                  />
+                )}
               </div>
               <div className="form-group">
                 <label className="form-label">Téléphone / WhatsApp *</label>

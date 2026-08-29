@@ -4,7 +4,8 @@ export type UserRole =
   | 'Exposant'
   | 'Sponsor'
   | 'Hosted Buyer'
-  | 'Étudiant';
+  | 'Étudiant'
+  | 'Autre';
 
 export type UserSector = 
   | 'Hôtellerie'
