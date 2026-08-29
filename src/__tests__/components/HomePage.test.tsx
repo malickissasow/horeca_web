@@ -172,7 +172,7 @@ describe('HomePage — Formulaire de contact', () => {
 describe('HomePage — WhatsApp Section', () => {
   it('affiche le lien WhatsApp', () => {
     renderHomePage(null);
-    expect(screen.getByText(/\+221 76 420 52 16/i)).toBeInTheDocument();
+    expect(screen.getByText(/\+221 77 542 82 35/i)).toBeInTheDocument();
   });
 
   it('affiche "Infoline Officielle WhatsApp"', () => {

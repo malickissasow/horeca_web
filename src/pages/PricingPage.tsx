@@ -173,7 +173,7 @@ export const PricingPage: React.FC = () => {
             </p>
           </div>
         </div>
-        <a href="https://wa.me/221764205216" target="_blank" rel="noopener noreferrer" className="btn btn-accent btn-sm">
+        <a href="https://wa.me/221775428235" target="_blank" rel="noopener noreferrer" className="btn btn-accent btn-sm">
           <i className="fab fa-whatsapp"></i> Demander un devis / proforma ({currency})
         </a>
       </div>

@@ -75,7 +75,7 @@ export const DigitalPassModal: React.FC<DigitalPassModalProps> = ({ user, onClos
             {/* QR CODE CONTAINER */}
             <div style={{ background: 'var(--gray-100)', padding: '16px', borderRadius: '12px', display: 'inline-block', border: '1px border var(--gray-200)', marginBottom: '16px' }}>
               <img
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(`HORECA-PASS-${user.id}-${user.email}-WA+221764205216`)}`}
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(`HORECA-PASS-${user.id}-${user.email}-WA+221775428235`)}`}
                 alt="QR Code Badge HORECA"
                 style={{ width: '160px', height: '160px', borderRadius: '8px', opacity: isActive ? 1 : 0.4 }}
               />
@@ -86,7 +86,7 @@ export const DigitalPassModal: React.FC<DigitalPassModalProps> = ({ user, onClos
 
             <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '20px', lineHeight: '1.5' }}>
               <i className="fas fa-info-circle text-accent"></i> Présentez ce pass numérique à l'accueil du Novotel Dakar.<br />
-              <i className="fab fa-whatsapp text-success" style={{ marginRight: '4px' }}></i> Assistance Conciergerie IA : <strong>+221 76 420 52 16</strong>
+              <i className="fab fa-whatsapp text-success" style={{ marginRight: '4px' }}></i> Assistance Conciergerie IA : <strong>+221 77 542 82 35</strong>
             </div>
 
             {/* ACTIONS */}

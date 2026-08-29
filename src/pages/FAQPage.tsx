@@ -21,7 +21,7 @@ const FAQ_DATA: FAQItem[] = [
     id: 'gen-2',
     category: 'Accès & Dates',
     question: "Comment accéder à l'Hôtel Novotel Dakar depuis l'aéroport DSS ?",
-    answer: "Des navettes privées sont affrétées par Demba Conciergerie (+221 76 420 52 16). Vous pouvez aussi réserver un taxi agréé directement sur votre espace participant."
+    answer: "Des navettes privées sont affrétées par Demba Conciergerie (+221 77 542 82 35). Vous pouvez aussi réserver un taxi agréé directement sur votre espace participant."
   },
   {
     id: 'gen-3',
@@ -111,7 +111,7 @@ const FAQ_DATA: FAQItem[] = [
     id: 'inf-2',
     category: 'Infos Pratiques',
     question: "Comment contacter l'assistant IA WhatsApp pour une réponse immédiate ?",
-    answer: "Scannez le QR Code ou envoyez un message au +221 76 420 52 16. Notre assistant IA répond 24h/24 à toutes vos questions sur les accès, le programme et les réservations."
+    answer: "Scannez le QR Code ou envoyez un message au +221 77 542 82 35. Notre assistant IA répond 24h/24 à toutes vos questions sur les accès, le programme et les réservations."
   }
 ];
 
@@ -166,7 +166,7 @@ export const FAQPage: React.FC = () => {
 
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <a
-              href="https://wa.me/221764205216?text=Bonjour%20Conciergerie%20HORECA%2C%20je%20souhaite%20une%20assistance%20voyage%20pour%20Dakar."
+              href="https://wa.me/221775428235?text=Bonjour%20Conciergerie%20HORECA%2C%20je%20souhaite%20une%20assistance%20voyage%20pour%20Dakar."
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-accent btn-sm"
@@ -369,7 +369,7 @@ export const FAQPage: React.FC = () => {
                     Sur site — salon, conférences et rendez-vous B2B. Tarifs négociés HORECA 2026.
                   </p>
                   <a
-                    href="https://wa.me/221764205216?text=Bonjour%20HORECA%2C%20je%20souhaite%20r%C3%A9server%20une%20chambre%20tarif%20officiel%20au%20Novotel%20Dakar."
+                    href="https://wa.me/221775428235?text=Bonjour%20HORECA%2C%20je%20souhaite%20r%C3%A9server%20une%20chambre%20tarif%20officiel%20au%20Novotel%20Dakar."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-accent btn-sm"
@@ -460,13 +460,13 @@ export const FAQPage: React.FC = () => {
                   Communiquez vos numéros de vol et horaires au moins 7 jours avant votre arrivée pour bénéficier de l'accueil aéroport et du transfert groupé vers l'hôtel.
                 </p>
                 <a
-                  href="https://wa.me/221764205216?text=Bonjour%20Demba%20Conciergerie%2C%20je%20souhaite%20r%C3%A9server%20un%20transfert%20depuis%20l%27a%C3%A9roport%20AIBD."
+                  href="https://wa.me/221775428235?text=Bonjour%20Demba%20Conciergerie%2C%20je%20souhaite%20r%C3%A9server%20un%20transfert%20depuis%20l%27a%C3%A9roport%20AIBD."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-accent btn-sm"
                   style={{ fontWeight: 800 }}
                 >
-                  <i className="fab fa-whatsapp"></i> Organiser mon transfert (+221 76 420 52 16)
+                  <i className="fab fa-whatsapp"></i> Organiser mon transfert (+221 77 542 82 35)
                 </a>
               </div>
             </div>
@@ -713,7 +713,7 @@ export const FAQPage: React.FC = () => {
             </p>
 
             <a
-              href="https://wa.me/221764205216?text=Bonjour%20Assistant%20IA%20HORECA%2C%20j%27ai%20une%20question%20sur%20le%20salon."
+              href="https://wa.me/221775428235?text=Bonjour%20Assistant%20IA%20HORECA%2C%20j%27ai%20une%20question%20sur%20le%20salon."
               target="_blank"
               rel="noopener noreferrer"
               className="btn"
@@ -733,13 +733,13 @@ export const FAQPage: React.FC = () => {
               }}
             >
               <i className="fab fa-whatsapp" style={{ fontSize: '1.2rem' }}></i>
-              Écrire au +221 76 420 52 16
+              Écrire au +221 77 542 82 35
             </a>
 
             <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid #dcfce7', fontSize: '0.78rem', color: '#166534' }}>
               <strong>Secrétariat &amp; Conciergerie :</strong><br />
               <i className="fas fa-envelope" style={{ marginRight: '4px' }}></i> infos@horecafrica.com<br />
-              <i className="fas fa-phone-alt" style={{ marginRight: '4px' }}></i> +221 76 420 52 16
+              <i className="fas fa-phone-alt" style={{ marginRight: '4px' }}></i> +221 77 542 82 35
             </div>
           </div>
         </div>

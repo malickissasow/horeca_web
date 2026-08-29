@@ -32,8 +32,8 @@ export const TopBar: React.FC = () => {
           </span>
           <span>
             <i className="fas fa-phone-alt"></i>{' '}
-            <a href="https://wa.me/221764205216" target="_blank" rel="noopener noreferrer" style={{ color: 'white', opacity: 0.95 }}>
-              +221 76 420 52 16
+            <a href="https://wa.me/221775428235" target="_blank" rel="noopener noreferrer" style={{ color: 'white', opacity: 0.95 }}>
+              +221 77 542 82 35
             </a>
           </span>
           <span>

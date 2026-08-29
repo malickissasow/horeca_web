@@ -370,7 +370,7 @@ export const HomePage: React.FC = () => {
               Scannez le QR Code ou appuyez pour contacter directement l&apos;équipe HORECA Africa :
             </p>
             <a
-              href="https://wa.me/221764205216"
+              href="https://wa.me/221775428235"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -383,20 +383,20 @@ export const HomePage: React.FC = () => {
               }}
             >
               <img
-                src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https://wa.me/221764205216"
+                src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https://wa.me/221775428235"
                 alt="WhatsApp Assistant IA HORECA Africa"
                 width={140}
                 height={140}
               />
             </a>
             <a
-              href="https://wa.me/221764205216"
+              href="https://wa.me/221775428235"
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-accent btn-sm"
               style={{ marginTop: '16px', textDecoration: 'none' }}
             >
-              <i className="fab fa-whatsapp"></i> Chatter +221 76 420 52 16
+              <i className="fab fa-whatsapp"></i> Chatter +221 77 542 82 35
             </a>
           </div>
         </div>

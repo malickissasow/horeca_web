@@ -44,7 +44,7 @@ export const Footer: React.FC = () => {
               <i className="fab fa-linkedin-in"></i>
             </a>
             <a
-              href="https://wa.me/221764205216" target="_blank" rel="noopener noreferrer"
+              href="https://wa.me/221775428235" target="_blank" rel="noopener noreferrer"
               style={{ ...socialStyle, border: '1.5px solid #25D366' }} title="WhatsApp direct"
             >
               <i className="fab fa-whatsapp" style={{ color: '#25D366' }}></i>
@@ -112,8 +112,8 @@ export const Footer: React.FC = () => {
             </li>
             <li>
               <i className="fas fa-phone-alt" style={{ color: 'var(--horeca-orange)', marginRight: '8px' }}></i>
-              <a href="https://wa.me/221764205216" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.9)' }}>
-                +221 76 420 52 16
+              <a href="https://wa.me/221775428235" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.9)' }}>
+                +221 77 542 82 35
               </a>
             </li>
             <li>
