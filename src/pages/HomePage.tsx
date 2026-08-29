@@ -88,9 +88,77 @@ export const HomePage: React.FC = () => {
             </span>
           </div>
 
-          <h1 className="hero-title">
-            Semaine des affaires <span>HORECA en Afrique 2026</span>
-          </h1>
+          <div className="hero-steps-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))',
+            gap: '16px',
+            marginTop: '20px',
+            marginBottom: '24px'
+          }}>
+            <div className="hero-step-card" style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.25)',
+              borderRadius: '12px',
+              padding: '16px 18px',
+              color: 'white',
+              textAlign: 'left'
+            }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--accent)', marginBottom: '4px' }}>01</div>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'white', marginBottom: '6px' }}>Créez votre profil</h3>
+              <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.88)', margin: 0, lineHeight: 1.4 }}>
+                Renseignez votre offre ou vos besoins d'achat.
+              </p>
+            </div>
+
+            <div className="hero-step-card" style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.25)',
+              borderRadius: '12px',
+              padding: '16px 18px',
+              color: 'white',
+              textAlign: 'left'
+            }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--accent)', marginBottom: '4px' }}>02</div>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white', marginBottom: '6px' }}>Algorithme de matching</h3>
+              <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.88)', margin: 0, lineHeight: 1.4 }}>
+                Nous vous suggérons les meilleurs profils à rencontrer.
+              </p>
+            </div>
+
+            <div className="hero-step-card" style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.25)',
+              borderRadius: '12px',
+              padding: '16px 18px',
+              color: 'white',
+              textAlign: 'left'
+            }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--accent)', marginBottom: '4px' }}>03</div>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'white', marginBottom: '6px' }}>Planifiez vos RDV</h3>
+              <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.88)', margin: 0, lineHeight: 1.4 }}>
+                Slots de 20 min pré-planifiés sur les 2 jours.
+              </p>
+            </div>
+
+            <div className="hero-step-card" style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              backdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.25)',
+              borderRadius: '12px',
+              padding: '16px 18px',
+              color: 'white',
+              textAlign: 'left'
+            }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--accent)', marginBottom: '4px' }}>04</div>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'white', marginBottom: '6px' }}>Concluez</h3>
+              <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.88)', margin: 0, lineHeight: 1.4 }}>
+                Suivi post-événement pour transformer les leads.
+              </p>
+            </div>
+          </div>
           <p className="hero-subtitle">
             Le rendez-vous B2B des professionnels du tourisme, de l'hôtellerie, de la restauration, des voyages et de l'événementiel en Afrique. Une plateforme de génération d'affaires — pas un simple salon.
           </p>
@@ -99,7 +167,18 @@ export const HomePage: React.FC = () => {
 
           <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginTop: '24px' }}>
             <button className="btn btn-accent" style={{ padding: '12px 24px', fontSize: '1rem', fontWeight: 800 }} onClick={() => setCurrentPage('register')}>
-              <i className="fas fa-user-plus"></i> S'inscrire
+              <i className="fas fa-bolt"></i> Activer mon Business Matching
+            </button>
+            <button
+              className="btn btn-outline"
+              style={{ color: 'white', borderColor: 'rgba(255,255,255,0.7)', background: 'rgba(255,255,255,0.15)', padding: '12px 24px', fontSize: '1rem', fontWeight: 800 }}
+              onClick={() => {
+                const el = document.getElementById('contact-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                else window.open('https://wa.me/221775428235', '_blank');
+              }}
+            >
+              <i className="fas fa-question-circle"></i> Poser une question
             </button>
             <button className="btn btn-purple" style={{ padding: '12px 24px', fontSize: '1rem', fontWeight: 800 }} onClick={() => setCurrentPage('pricing')}>
               <i className="fas fa-store"></i> Exposer
@@ -260,7 +339,7 @@ export const HomePage: React.FC = () => {
       </div>
 
       {/* CONTACT & WHATSAPP SECTION */}
-      <div className="card">
+      <div className="card" id="contact-section">
         <div className="card-header">
           <h3 className="card-title">
             <i className="fas fa-headset text-accent"></i> Secrétariat du Salon &amp; Infoline WhatsApp

@@ -26,14 +26,12 @@ const renderHomePage = (preloadUser?: typeof mockUser | null) => {
 };
 
 describe('HomePage — Hero section', () => {
-  it('affiche "HORECA en Afrique" dans le titre', () => {
+  it('affiche les 4 étapes du déroulé', () => {
     renderHomePage(null);
-    expect(screen.getAllByText(/HORECA en Afrique/i).length).toBeGreaterThan(0);
-  });
-
-  it('affiche "Semaine des affaires"', () => {
-    renderHomePage(null);
-    expect(screen.getAllByText(/Semaine des affaires/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/Créez votre profil/i)).toBeInTheDocument();
+    expect(screen.getByText(/Algorithme de matching/i)).toBeInTheDocument();
+    expect(screen.getByText(/Planifiez vos RDV/i)).toBeInTheDocument();
+    expect(screen.getByText(/Concluez/i)).toBeInTheDocument();
   });
 
   it('affiche le sous-titre descriptif', () => {
@@ -43,7 +41,8 @@ describe('HomePage — Hero section', () => {
 
   it('affiche les boutons d\'action héros', () => {
     renderHomePage(null);
-    expect(screen.getAllByText(/S'inscrire/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Activer mon Business Matching/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Poser une question/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Exposer/i).length).toBeGreaterThan(0);
   });
 });
