@@ -337,7 +337,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                     <li>Ouvrez votre application {method === 'MANUAL_OM' ? 'Orange Money' : 'Wave'}.</li>
                     <li>Effectuez un transfert du montant exact de <strong>{formattedAmount}</strong> au numéro :</li>
                     <li style={{ fontSize: '1.15rem', fontWeight: 900, color: '#fba919', margin: '4px 0' }}>
-                      📞 +221 77 542 82 35
+                      📞 +221 76 420 52 16
                     </li>
                     <li>Saisissez vos identifiants ci-dessous pour créer votre Compte Participant.</li>
                   </ol>

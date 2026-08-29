@@ -215,7 +215,7 @@ Pouvez-vous nous envoyer la convention officielle d'exposition ? Merci !`;
 
         <div class="footer">
           <p><strong>Comité d'Organisation HORECA AFRICA 2026</strong> | Demba Conciergerie Luxury DMC</p>
-          <p>Dakar, Sénégal — Téléphone / WhatsApp : +221 77 542 82 35 | Email : contact@horecafrica.org</p>
+          <p>Dakar, Sénégal — Téléphone / WhatsApp : +221 76 420 52 16 | Email : contact@horecafrica.org</p>
         </div>
       </body>
       </html>
@@ -485,7 +485,7 @@ Pouvez-vous nous envoyer la convention officielle d'exposition ? Merci !`;
             </button>
 
             <a
-              href={`https://wa.me/221775428235?text=${generateWhatsAppMessage()}`}
+              href={`https://wa.me/221764205216?text=${generateWhatsAppMessage()}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-accent"
