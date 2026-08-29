@@ -79,22 +79,23 @@ def deploy():
         print(f"❌ Local directory {LOCAL_DIR} does not exist!")
         sys.exit(1)
 
-    print(f"📤 Uploading dist/ files to Hostinger {REMOTE_DIR}/...")
+    base_dir = ftp.pwd().rstrip('/')
+    print(f"📤 Uploading dist/ files to Hostinger FTP folder ({base_dir})...")
     file_count = 0
 
     for root, dirs, files in os.walk(LOCAL_DIR):
         rel_path = os.path.relpath(root, LOCAL_DIR)
         if rel_path == ".":
-            target_remote = REMOTE_DIR
+            target_remote = base_dir if base_dir else "/"
         else:
-            target_remote = f"{REMOTE_DIR}/{rel_path.replace(os.sep, '/')}"
+            target_remote = f"{base_dir}/{rel_path.replace(os.sep, '/')}"
 
         ensure_remote_dir(ftp, target_remote)
-        ftp.cwd(f"/{target_remote}")
+        ftp.cwd(target_remote)
 
         for file in files:
             local_file = os.path.join(root, file)
-            print(f"  -> Uploading {rel_path}/{file} to /{target_remote}...")
+            print(f"  -> Uploading {os.path.join(rel_path, file)} to {target_remote}...")
             safe_upload_file(ftp, local_file, file)
             file_count += 1
 
